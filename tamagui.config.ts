@@ -12,23 +12,18 @@ import { createMedia } from "@tamagui/react-native-media-driver";
 // import { Text } from 'tamagui'
 // import { createAnimations } from "@tamagui/animations-css";
 const size = {
-  1: 11,
+  1: 10,
   2: 12,
-  3: 13,
-  4: 14,
-  5: 16,
-  6: 18,
-  7: 20,
-  8: 23,
-  9: 30,
-  10: 46,
-  11: 55,
-  12: 62,
-  13: 72,
-  14: 92,
-  15: 114,
-  16: 134,
-  true: 14,
+  3: 14,
+  4: 16,
+  5: 18,
+  6: 20,
+  7: 22,
+  8: 24,
+  9: 26,
+  10: 28,
+  11: 30,
+  true: 14
 };
 
 const lineHeight = {
@@ -48,12 +43,12 @@ const lineHeight = {
   14: 109,
   15: 133,
   16: 155,
-  true: 23,
+  true: 23
 };
 
 const weight = {
   1: "100",
-  2: "200",
+  2: "200"
 };
 
 const letterSpacing = {
@@ -73,7 +68,7 @@ const letterSpacing = {
   14: 0,
   15: 0,
   16: 0,
-  true: 0,
+  true: 0
 };
 
 const tamaguiConfig = createTamagui({
@@ -84,71 +79,71 @@ const tamaguiConfig = createTamagui({
       letterSpacing: letterSpacing,
       lineHeight: lineHeight,
       size: size,
-      weight: weight,
+      weight: weight
     },
     regular: {
       family: "JostRegular",
       letterSpacing: letterSpacing,
       lineHeight: lineHeight,
       size: size,
-      weight: weight,
+      weight: weight
     },
     heading: {
-      family: "JostRegular",
+      family: "JostBold",
       letterSpacing: letterSpacing,
       lineHeight: lineHeight,
       size: size,
-      weight: weight,
+      weight: weight
     },
     medium: {
       family: "JostMedium",
       letterSpacing: letterSpacing,
       lineHeight: lineHeight,
       size: size,
-      weight: weight,
+      weight: weight
     },
     semiBold: {
       family: "JostSemiBold",
       letterSpacing: letterSpacing,
       lineHeight: lineHeight,
       size: size,
-      weight: weight,
+      weight: weight
     },
     bold: {
       family: "JostBold",
       letterSpacing: letterSpacing,
       lineHeight: lineHeight,
       size: size,
-      weight: weight,
+      weight: weight
     },
     italic: {
       family: "JostItalic",
       letterSpacing: letterSpacing,
       lineHeight: lineHeight,
       size: size,
-      weight: weight,
-    },
+      weight: weight
+    }
   },
   tokens,
   shorthands,
   themes: {
     light: {
-      color: "#122046",
+      color: "#122046"
     },
     dark: {
       bg: "#111",
-      color: "#fff",
+      color: "#fff"
     },
 
-    defaultProps: {},
+    defaultProps: {}
   },
   media: createMedia({
     mob: { maxWidth: 600 },
     iPad: { minWidth: 600, maxWidth: 992 },
     iPadPro: { minWidth: 992, maxWidth: 1264 },
     mac: { minWidth: 1265, maxWidth: 1560 },
-    specialCase: { width: 1024, height: 768 },
-  }),
+    specialCase: { width: 1024, height: 768 }
+  })
 });
 // this makes typescript properly type everything based on the config
 
