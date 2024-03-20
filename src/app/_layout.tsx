@@ -15,30 +15,34 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(home)",
+  initialRouteName: "(main)",
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require("../../assets/fonts/SpaceMono-Regular.ttf"),
-    ...FontAwesome.font,
-  });
+  const customFonts = {
+    JostRegular: require("../../assets/fonts/jost/Jost-Regular.ttf"),
+    JostMedium: require("../../assets/fonts/jost/Jost-Medium.ttf"),
+    JostSemiBold: require("../../assets/fonts/jost//Jost-SemiBold.ttf"),
+    JostBold: require("../../assets/fonts/jost/Jost-Regular.ttf"),
+  };
+
+  const [fontsLoaded, fontError] = useFonts(customFonts);
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+    if (fontError) throw fontError;
+  }, [fontError]);
 
   useEffect(() => {
-    if (loaded) {
+    if (fontsLoaded) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [fontsLoaded]);
 
-  if (!loaded) {
+  if (!fontsLoaded) {
     return null;
   }
 

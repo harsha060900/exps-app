@@ -5,7 +5,7 @@ export default function HomeLayout() {
   return (
     <>
       <XStack>
-        <Text>Hello</Text>
+        <Text style={{fontFamily:'JostBold', fontWeight:'700'}}>Hello</Text>
       </XStack>
     </>
   );
