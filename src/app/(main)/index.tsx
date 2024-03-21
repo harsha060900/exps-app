@@ -8,16 +8,19 @@ export default function HomeLayout() {
       <Stack.Screen
         options={{
           headerStyle: {
-            backgroundColor: "red"
+            backgroundColor: "#191919"
           },
           headerTintColor: "#fff",
           headerTitleStyle: {
             fontWeight: "bold"
-          }
+          },
+          headerShadowVisible: false
         }}
       />
-      <XStack>
-        <Text style={{ fontFamily: "JostBold", fontWeight: "700" }}>Hello</Text>
+      <XStack bg={"#191919"} flex={1}>
+        <Text fontFamily={"$semiBold"} fontSize={"$6"} color="#fff">
+          Hello
+        </Text>
       </XStack>
     </>
   );

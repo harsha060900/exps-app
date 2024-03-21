@@ -10,12 +10,12 @@ import tamaguiConfig from "@/tamagui.config";
 
 export {
   // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
+  ErrorBoundary
 } from "expo-router";
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(main)",
+  initialRouteName: "(main)"
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -26,7 +26,8 @@ export default function RootLayout() {
     JostRegular: require("../../assets/fonts/jost/Jost-Regular.ttf"),
     JostMedium: require("../../assets/fonts/jost/Jost-Medium.ttf"),
     JostSemiBold: require("../../assets/fonts/jost//Jost-SemiBold.ttf"),
-    JostBold: require("../../assets/fonts/jost/Jost-Regular.ttf"),
+    JostBold: require("../../assets/fonts/jost/Jost-Bold.ttf"),
+    JostItalic: require("../../assets/fonts/jost/Jost-Italic.ttf")
   };
 
   const [fontsLoaded, fontError] = useFonts(customFonts);
