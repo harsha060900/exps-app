@@ -23,6 +23,10 @@ const size = {
   9: 26,
   10: 28,
   11: 30,
+  12:32,
+  13:34,
+  14:36,
+  15:38,
   true: 14
 };
 
@@ -88,6 +92,13 @@ const tamaguiConfig = createTamagui({
       size: size,
       weight: weight
     },
+    subHead: {
+      family: "JostRegular",
+      letterSpacing: letterSpacing,
+      lineHeight: lineHeight,
+      size: size,
+      weight: weight
+    },
     heading: {
       family: "JostBold",
       letterSpacing: letterSpacing,
@@ -128,7 +139,7 @@ const tamaguiConfig = createTamagui({
   shorthands,
   themes: {
     light: {
-      color: "#122046"
+      color: "#fff"
     },
     dark: {
       bg: "#111",

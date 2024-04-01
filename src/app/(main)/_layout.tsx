@@ -1,18 +1,41 @@
+import { COLORS } from "@/src/constants";
 import { Tabs } from "expo-router";
 import React, { useEffect, useState } from "react";
+import { AntDesign } from '@expo/vector-icons';
 
 export default function MainLayout() {
   return (
-    <Tabs>
+    <Tabs screenOptions={{
+      tabBarStyle:{
+        backgroundColor:COLORS.bg,
+        borderTopWidth:0
+      },
+      tabBarInactiveTintColor:'#9af8e2',
+      tabBarActiveTintColor:COLORS.prime_green,
+      tabBarShowLabel:false
+    }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: "Dashboard"
+          title: "Dashboard",
+          tabBarIcon:({focused, color}) =>(<AntDesign name="home" size={26} color={focused?color:'#fff'} />),
         }}
-      />
-      <Tabs.Screen name="graph" />
-      <Tabs.Screen name="transactions" />
-      <Tabs.Screen name="profile" />
+        
+        />
+      <Tabs.Screen name="graph" 
+        options={{
+          title: "Dashboard",
+          tabBarIcon:({focused, color}) =>(<AntDesign name="barschart" size={26} color={focused?color:'#fff'} />),
+        }}
+        />
+      <Tabs.Screen name="transactions" options={{
+          title: "Dashboard",
+          tabBarIcon:({focused, color}) =>(<AntDesign name="wallet" size={26} color={focused?color:'#fff'} />),
+        }}/>
+      <Tabs.Screen name="profile" options={{
+          title: "Dashboard",
+          tabBarIcon:({focused, color}) =>(<AntDesign name="user" size={26} color={focused?color:'#fff'} />),
+        }}/>
     </Tabs>
   );
 }

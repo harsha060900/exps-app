@@ -1,5 +1,8 @@
+import { COLORS } from "@/src/constants";
+import HomeScreen from "@/src/screens/HomeScreen";
 import { Stack } from "expo-router";
 import React, { useEffect, useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, XStack } from "tamagui";
 
 export default function HomeLayout() {
@@ -8,20 +11,21 @@ export default function HomeLayout() {
       <Stack.Screen
         options={{
           headerStyle: {
-            backgroundColor: "#191919"
+            backgroundColor: COLORS.bg,
           },
           headerTintColor: "#fff",
           headerTitleStyle: {
-            fontWeight: "bold"
+            fontWeight: "bold",
           },
-          headerShadowVisible: false
+          headerShadowVisible: false,
+          headerShown: false,
         }}
       />
-      <XStack bg={"#191919"} flex={1}>
-        <Text fontFamily={"$semiBold"} fontSize={"$6"} color="#fff">
-          Hello
-        </Text>
-      </XStack>
+      <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.bg }}>
+        <XStack px={20}>
+          <HomeScreen />
+        </XStack>
+      </SafeAreaView>
     </>
   );
 }
