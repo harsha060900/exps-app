@@ -11,28 +11,38 @@ export default function MainLayout() {
         borderTopWidth:0
       },
       tabBarInactiveTintColor:'#9af8e2',
-      tabBarActiveTintColor:COLORS.prime_green,
+      tabBarActiveTintColor:COLORS.primary,
       tabBarShowLabel:false
     }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: "Dashboard",
+          href:null,
+        }}
+        
+        />
+      <Tabs.Screen
+        name="home"
+        options={{
+          headerShown: false,
           tabBarIcon:({focused, color}) =>(<AntDesign name="home" size={26} color={focused?color:'#fff'} />),
         }}
         
         />
       <Tabs.Screen name="graph" 
         options={{
+          headerShown: false,
           title: "Dashboard",
           tabBarIcon:({focused, color}) =>(<AntDesign name="barschart" size={26} color={focused?color:'#fff'} />),
         }}
         />
       <Tabs.Screen name="transactions" options={{
+          headerShown: false,
           title: "Dashboard",
           tabBarIcon:({focused, color}) =>(<AntDesign name="wallet" size={26} color={focused?color:'#fff'} />),
         }}/>
       <Tabs.Screen name="profile" options={{
+          headerShown: false,
           title: "Dashboard",
           tabBarIcon:({focused, color}) =>(<AntDesign name="user" size={26} color={focused?color:'#fff'} />),
         }}/>
