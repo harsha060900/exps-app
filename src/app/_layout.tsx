@@ -1,12 +1,13 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
-import { Slot, Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
+import { Slot, Stack, SplashScreen } from "expo-router";
+// import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
 import { TamaguiProvider } from "tamagui";
 import "@tamagui/core/reset.css";
 import tamaguiConfig from "@/tamagui.config";
+import { PaperProvider } from "react-native-paper";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -32,18 +33,14 @@ export default function RootLayout() {
 
   const [fontsLoaded, fontError] = useFonts(customFonts);
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
-    if (fontError) throw fontError;
-  }, [fontError]);
-
-  useEffect(() => {
-    if (fontsLoaded) {
+    if (fontsLoaded || fontError) {
+      // Hide the splash screen after the fonts have loaded (or an error was returned) and the UI is ready.
       SplashScreen.hideAsync();
     }
-  }, [fontsLoaded]);
+  }, [fontsLoaded, fontError]);
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded && !fontError) {
     return null;
   }
 
@@ -54,7 +51,9 @@ function RootLayoutNav() {
   return (
     // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
     <TamaguiProvider config={tamaguiConfig}>
-      <Slot />
+      <PaperProvider>
+        <Slot />
+      </PaperProvider>
     </TamaguiProvider>
     // </ThemeProvider>
   );

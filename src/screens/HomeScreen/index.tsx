@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { XStack, Text, YStack, Stack, View } from "tamagui";
+
 // icons
 import {
   MaterialCommunityIcons,
   Feather,
-  FontAwesome5,
+  FontAwesome5
 } from "@expo/vector-icons";
 import { COLORS } from "@/src/constants";
+import SharedFAB from "@/src/shared/SharedFAB";
 
 export default function HomeScreen() {
+  const [fabOpen, setFabOpen] = useState(false);
+
   return (
     <YStack flex={1}>
       {/* AVAL BALANCE */}
@@ -38,11 +42,12 @@ export default function HomeScreen() {
           color={COLORS.prime_red}
         />
       </XStack>
+      <SharedFAB open={fabOpen} onStateChange={(data) => setFabOpen(data)} />
     </YStack>
   );
 }
 
-function IncomeExpenseCard({ title, amt, icon, mr = 0, ml = 0, color }) {
+function IncomeExpenseCard({ title, amt, icon, mr = 0, ml = 0, color }: any) {
   return (
     <XStack
       bg={color}
@@ -54,17 +59,31 @@ function IncomeExpenseCard({ title, amt, icon, mr = 0, ml = 0, color }) {
       mr={mr}
       ml={ml}
     >
-      <View position="relative" mr={3} bg={'#fff'} px={10} py={5} borderRadius={15}>
-        <FontAwesome5 name="money-bill-alt" style={{marginTop:11}} size={24} color={color} />
+      <View
+        position="relative"
+        mr={3}
+        bg={"#fff"}
+        px={10}
+        py={5}
+        borderRadius={15}
+      >
+        <FontAwesome5
+          name="money-bill-alt"
+          style={{ marginTop: 11 }}
+          size={24}
+          color={color}
+        />
         <Feather
-          style={{ position: "absolute", top: 0, left:14 }}
-          name={`trending-${icon}`}
+          style={{ position: "absolute", top: 0, left: 14 }}
+          name={`trending-${icon}` as keyof object}
           size={21}
           color={color}
         />
       </View>
       <YStack>
-        <Text ml={6} ff={"$subHead"}>{title}</Text>
+        <Text ml={6} ff={"$subHead"}>
+          {title}
+        </Text>
         <XStack ai={"center"}>
           <MaterialCommunityIcons name="currency-inr" size={24} color="#fff" />
           <Text ff={"$medium"} fontSize={"$7"}>
