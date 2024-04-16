@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { XStack, Text, YStack, Stack, View } from "tamagui";
-
+import { XStack, Text, YStack, Stack, View, Button } from "tamagui";
 // icons
 import {
   MaterialCommunityIcons,
@@ -9,6 +8,7 @@ import {
 } from "@expo/vector-icons";
 import { COLORS } from "@/src/constants";
 import SharedFAB from "@/src/shared/SharedFAB";
+import { router } from "expo-router";
 
 export default function HomeScreen() {
   const [fabOpen, setFabOpen] = useState(false);
@@ -17,7 +17,9 @@ export default function HomeScreen() {
     <YStack flex={1}>
       {/* AVAL BALANCE */}
       <YStack ai="center">
-        <Text ff={"$subHead"}>Aval Balance</Text>
+        <Text ff={"$subHead"} ml={10}>
+          Available Balance
+        </Text>
         <XStack ai={"center"}>
           <MaterialCommunityIcons name="currency-inr" size={34} color="#fff" />
           <Text ff={"$bold"} fontSize={"$14"}>
@@ -30,14 +32,14 @@ export default function HomeScreen() {
         <IncomeExpenseCard
           title="Income"
           amt={98760}
-          icon="up"
+          icon="down"
           mr={10}
           color={COLORS.prime_green}
         />
         <IncomeExpenseCard
           title="Expense"
           amt={5000}
-          icon="down"
+          icon="up"
           ml={10}
           color={COLORS.prime_red}
         />
