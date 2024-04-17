@@ -16,7 +16,7 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(main)/home"
+  initialRouteName: "(main)"
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -50,7 +50,7 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-    <TamaguiProvider config={tamaguiConfig}>
+    <TamaguiProvider config={tamaguiConfig} defaultTheme="dark">
       <PaperProvider>
         <Stack>
           <Stack.Screen name="(main)" options={{ headerShown: false }} />

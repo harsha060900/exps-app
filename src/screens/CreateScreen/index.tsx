@@ -1,28 +1,38 @@
+// package
 import React, { useEffect, useState } from "react";
-import { XStack, Text, YStack, Stack, View, Button } from "tamagui";
+import { XStack, Text, YStack, View, Button, Input } from "tamagui";
+// form
+import { useForm, Controller } from "react-hook-form";
 // icons
-import {
-  MaterialCommunityIcons,
-  Feather,
-  FontAwesome5,
-} from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+// styles
 import { COLORS } from "@/src/constants";
-import { router } from "expo-router";
+import { SharedInput } from "@/src/shared/SharedInput";
 
 export default function CreateScreen() {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    defaultValues: {
+      firstName: "",
+      lastName: ""
+    }
+  });
+
   return (
-    <YStack flex={1}>
-      {/* AVAL BALANCE */}
-      <YStack ai="center">
-        <Text ff={"$subHead"} ml={10}>Available Balance</Text>
-        <XStack ai={"center"}>
-          <MaterialCommunityIcons name="currency-inr" size={34} color="#fff" />
-          <Text ff={"$bold"} fontSize={"$14"}>
-            1987
-          </Text>
-        </XStack>
+    <>
+      <YStack flex={1}>
+        <Controller
+          control={control}
+          rules={{
+            required: true
+          }}
+          render={({ field: { onChange, onBlur, value } }) => <SharedInput />}
+          name="firstName"
+        />
       </YStack>
-      </YStack>
+    </>
   );
 }
-

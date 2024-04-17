@@ -34,7 +34,7 @@ export default function HomeScreen() {
           amt={98760}
           icon="down"
           mr={10}
-          color={COLORS.prime_green}
+          color={COLORS.primary}
         />
         <IncomeExpenseCard
           title="Expense"
