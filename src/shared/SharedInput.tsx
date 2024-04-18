@@ -1,19 +1,13 @@
 import { GetProps, Input, Label, YStack, styled } from "tamagui";
+import { COLORS } from "../constants";
 
-const CustomInput = styled(Input, {
-  name: "CustomInput",
-  overflow: "scroll",
-  borderColor: "#fff",
-  size: "$5"
+export const SharedInput = styled(Input, {
+  name: "SharedInput",
+  acceptsClassName: true,
+  // overflow: "scroll",
+  borderColor: COLORS.blur_border,
+  focusStyle: { borderColor: "#fff" },
+  size: "$5",
+  px: 15,
+  letterSpacing: 0.7
 });
-
-export const SharedInput = () => {
-  return (
-    <YStack>
-      <Label size={"$4"} color={"#C0C0C0"}>
-        Text
-      </Label>
-      <CustomInput />
-    </YStack>
-  );
-};

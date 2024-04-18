@@ -18,7 +18,7 @@ export default function HomeLayout() {
       <SafeAreaView
         style={{ flex: 1, backgroundColor: COLORS.bg, position: "relative" }}
       >
-        <XStack px={20} flex={1} pt={20}>
+        <XStack flex={1}>
           <HomeScreen />
         </XStack>
       </SafeAreaView>

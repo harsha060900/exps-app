@@ -14,7 +14,7 @@ export default function HomeScreen() {
   const [fabOpen, setFabOpen] = useState(false);
 
   return (
-    <YStack flex={1}>
+    <YStack flex={1} px={20} pt={20}>
       {/* AVAL BALANCE */}
       <YStack ai="center">
         <Text ff={"$subHead"} ml={10}>

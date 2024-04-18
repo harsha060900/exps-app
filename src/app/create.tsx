@@ -21,7 +21,7 @@ export default function HomeLayout() {
           },
           headerTintColor: "#fff",
           headerTitleStyle: {
-            fontWeight: "bold"
+            fontFamily: "JostSemiBold"
           },
           headerShadowVisible: false,
           headerLeft: (props) => (
