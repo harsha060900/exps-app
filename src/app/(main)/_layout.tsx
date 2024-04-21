@@ -12,7 +12,6 @@ export default function MainLayout() {
           backgroundColor: COLORS.bg,
           borderTopWidth: 0
         },
-        tabBarInactiveTintColor: "#9af8e2",
         tabBarActiveTintColor: COLORS.primary,
         tabBarShowLabel: false
       }}
@@ -22,7 +21,7 @@ export default function MainLayout() {
         options={{
           headerShown: false,
           tabBarIcon: ({ focused, color }) => (
-            <AntDesign name="home" size={26} color={focused ? color : "#fff"} />
+            <AntDesign name="home" size={26} color={focused ? color : COLORS.icon} />
           )
         }}
       />
@@ -31,7 +30,7 @@ export default function MainLayout() {
         options={{
           headerShown: false,
           tabBarIcon: ({ focused, color }) => (
-            <AntDesign name="home" size={26} color={focused ? color : "#fff"} />
+            <AntDesign name="home" size={26} color={focused ? color : COLORS.icon} />
           )
         }}
       /> */}
@@ -44,7 +43,7 @@ export default function MainLayout() {
             <AntDesign
               name="barschart"
               size={26}
-              color={focused ? color : "#fff"}
+              color={focused ? color : COLORS.icon}
             />
           )
         }}
@@ -58,7 +57,7 @@ export default function MainLayout() {
             <AntDesign
               name="wallet"
               size={26}
-              color={focused ? color : "#fff"}
+              color={focused ? color : COLORS.icon}
             />
           )
         }}
@@ -69,7 +68,7 @@ export default function MainLayout() {
           headerShown: false,
           title: "Dashboard",
           tabBarIcon: ({ focused, color }) => (
-            <AntDesign name="user" size={26} color={focused ? color : "#fff"} />
+            <AntDesign name="user" size={26} color={focused ? color : COLORS.icon} />
           )
         }}
       />

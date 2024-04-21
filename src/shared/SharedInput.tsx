@@ -7,7 +7,8 @@ export const SharedInput = styled(Input, {
   // overflow: "scroll",
   borderColor: COLORS.blur_border,
   focusStyle: { borderColor: "#fff" },
-  size: "$5",
+  size: "$3",
   px: 15,
+  h:46,
   letterSpacing: 0.7
 });
