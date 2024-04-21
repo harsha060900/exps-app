@@ -8,14 +8,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/src/constants";
 // Components and Screens
 import HomeScreen from "@/src/screens/HomeScreen";
-import CreateScreen from "../screens/CreateScreen";
+import CategoryScreen from "../screens/CategoryScreen";
 
 export default function HomeLayout() {
   return (
     <>
       <Stack.Screen
         options={{
-          title: "Create Category",
+          title: "Category",
           headerStyle: {
             backgroundColor: COLORS.bg
           },
@@ -36,7 +36,7 @@ export default function HomeLayout() {
         }}
       />
       <XStack px={20} flex={1} bg={COLORS.bg}>
-        <CreateScreen />
+        <CategoryScreen />
       </XStack>
     </>
   );

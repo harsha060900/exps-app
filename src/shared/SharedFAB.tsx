@@ -45,7 +45,7 @@ export default function SharedFAB({ open, onStateChange }: FABProps) {
           label: "Category",
           color: "#fff",
           style: { backgroundColor: COLORS.primary, borderRadius: 50 },
-          onPress: () => router.push("/create")
+          onPress: () => router.push("/category")
         }
       ]}
       onStateChange={(value) => onStateChange(value.open)}

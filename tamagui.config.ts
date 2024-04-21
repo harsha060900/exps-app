@@ -12,23 +12,21 @@ import { createMedia } from "@tamagui/react-native-media-driver";
 // import { Text } from 'tamagui'
 // import { createAnimations } from "@tamagui/animations-css";
 const size = {
-  1: 10,
-  2: 12,
-  3: 14,
-  3.5: 15,
-  4: 16,
-  5: 18,
-  6: 20,
-  7: 22,
-  8: 24,
-  9: 26,
-  10: 28,
-  11: 30,
-  12: 32,
-  13: 34,
-  14: 36,
-  15: 38,
-  true: 14
+  1: 12,
+  2: 14,
+  3: 16,
+  4: 18,
+  5: 20,
+  6: 22,
+  7: 24,
+  8: 26,
+  9: 28,
+  10: 30,
+  11: 32,
+  12: 34,
+  13: 36,
+  14: 38,
+  true: 16
 };
 
 const lineHeight = {
@@ -144,7 +142,7 @@ const tamaguiConfig = createTamagui({
     },
     dark: {
       bg: "#111",
-      color: "#fff"
+      color: "#E5E4E2"
     },
 
     defaultProps: {}

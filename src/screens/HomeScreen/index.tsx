@@ -21,7 +21,7 @@ export default function HomeScreen() {
           Available Balance
         </Text>
         <XStack ai={"center"}>
-          <MaterialCommunityIcons name="currency-inr" size={34} color="#fff" />
+          <MaterialCommunityIcons name="currency-inr" size={34} color={COLORS.prime_text} />
           <Text ff={"$bold"} fontSize={"$14"}>
             1987
           </Text>
@@ -83,12 +83,12 @@ function IncomeExpenseCard({ title, amt, icon, mr = 0, ml = 0, color }: any) {
         />
       </View>
       <YStack>
-        <Text ml={6} ff={"$subHead"}>
+        <Text ml={6} ff={"$subHead"} color="#fff">
           {title}
         </Text>
         <XStack ai={"center"}>
           <MaterialCommunityIcons name="currency-inr" size={24} color="#fff" />
-          <Text ff={"$medium"} fontSize={"$7"}>
+          <Text ff={"$medium"} fontSize={"$7"} color={'#fff'}>
             {amt}
           </Text>
         </XStack>
