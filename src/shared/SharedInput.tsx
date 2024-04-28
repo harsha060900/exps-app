@@ -5,7 +5,6 @@ export const SharedInput = styled(Input, {
   name: "SharedInput",
   acceptsClassName: true,
   // overflow: "scroll",
-  borderColor: COLORS.blur_border,
   focusStyle: { borderColor: "#fff" },
   size: "$3",
   px: 15,
