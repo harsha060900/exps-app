@@ -6,10 +6,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 // Icons
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/src/constants";
+import SubCategoryScreen from "@/src/screens/SubCategoryScreen";
 // Components and Screens
-import HomeScreen from "@/src/screens/HomeScreen";
-import CategoryScreen from "../screens/CategoryScreen";
-import AddCategory from "../components/Category/AddCategory";
 
 export default function HomeLayout() {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -18,7 +16,7 @@ export default function HomeLayout() {
     <>
       <Stack.Screen
         options={{
-          title: "Category",
+          title: "Sub Category",
           headerStyle: {
             backgroundColor: COLORS.bg
           },
@@ -53,14 +51,8 @@ export default function HomeLayout() {
         }}
       />
       <XStack px={20} flex={1} bg={COLORS.bg}>
-        <CategoryScreen />
+        <SubCategoryScreen />
       </XStack>
-      <AddCategory
-        isOpen={dialogOpen}
-        setIsOpen={(data) => setDialogOpen(data)}
-        editData={null}
-        editId={null}
-      />
     </>
   );
 }

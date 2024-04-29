@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { FAB, Portal, PaperProvider } from "react-native-paper";
-import { MaterialIcons } from "@expo/vector-icons";
-import { COLORS } from "@/src/constants";
+import { FAB } from "react-native-paper";
 import { router } from "expo-router";
+// icons
+import { MaterialIcons, Ionicons } from "@expo/vector-icons";
+// styles
+import { COLORS } from "@/src/constants";
 
 type FABProps = {
   open: boolean;
@@ -32,6 +34,20 @@ export default function SharedFAB({ open, onStateChange }: FABProps) {
           color: "#fff",
           style: { backgroundColor: COLORS.primary, borderRadius: 50 },
           onPress: () => console.log("Pressed star")
+        },
+        {
+          icon: () => (
+            <Ionicons
+              name="filter"
+              size={21}
+              style={{ paddingLeft: 1, paddingTop: 2 }}
+              color="#fff"
+            />
+          ),
+          label: "Sub Category",
+          color: "#fff",
+          style: { backgroundColor: COLORS.primary, borderRadius: 50 },
+          onPress: () => router.push("/subCategory")
         },
         {
           icon: () => (

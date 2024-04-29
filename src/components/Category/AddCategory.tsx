@@ -32,7 +32,7 @@ import {
 type AddProps = {
   isOpen: boolean;
   setIsOpen: (data: boolean) => void;
-  editData: {};
+  editData: {} | null;
   editId: number | null;
 };
 type FormType = {
@@ -85,8 +85,6 @@ export default function AddCategory({
   }
 
   useEffect(() => {
-    console.log('id:', editId);
-    
     if (editId) {
       setValue("cate_name", editData?.cate_name);
     }

@@ -60,6 +60,7 @@ function RootLayoutNav() {
             <Stack>
               <Stack.Screen name="(main)" options={{ headerShown: false }} />
               <Stack.Screen name="category" />
+              <Stack.Screen name="subCategory" />
             </Stack>
           </PaperProvider>
         </TamaguiProvider>
