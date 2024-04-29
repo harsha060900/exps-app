@@ -9,8 +9,11 @@ import { COLORS } from "@/src/constants";
 // Components and Screens
 import HomeScreen from "@/src/screens/HomeScreen";
 import CategoryScreen from "../screens/CategoryScreen";
+import AddCategory from "../components/Category/AddCategory";
 
 export default function HomeLayout() {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   return (
     <>
       <Stack.Screen
@@ -32,12 +35,30 @@ export default function HomeLayout() {
               color="#fff"
               onPress={() => router.back()}
             />
+          ),
+          headerRight: (props) => (
+            <Ionicons
+              name="add"
+              style={{
+                backgroundColor: COLORS.primary,
+                borderRadius: 5,
+                padding: 8,
+                marginRight: 5
+              }}
+              size={20}
+              color={"#fff"}
+              onPress={() => setDialogOpen(true)}
+            />
           )
         }}
       />
       <XStack px={20} flex={1} bg={COLORS.bg}>
         <CategoryScreen />
       </XStack>
+      <AddCategory
+        isOpen={dialogOpen}
+        setIsOpen={(data) => setDialogOpen(data)}
+      />
     </>
   );
 }

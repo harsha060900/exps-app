@@ -10,15 +10,16 @@ import tamaguiConfig from "@/tamagui.config";
 import { PaperProvider } from "react-native-paper";
 import { Provider } from "react-redux";
 import { store } from "../store";
+import { RootSiblingParent } from "react-native-root-siblings";
 
 export {
   // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
+  ErrorBoundary
 } from "expo-router";
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(main)",
+  initialRouteName: "(main)"
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -30,7 +31,7 @@ export default function RootLayout() {
     JostMedium: require("../../assets/fonts/jost/Jost-Medium.ttf"),
     JostSemiBold: require("../../assets/fonts/jost//Jost-SemiBold.ttf"),
     JostBold: require("../../assets/fonts/jost/Jost-Bold.ttf"),
-    JostItalic: require("../../assets/fonts/jost/Jost-Italic.ttf"),
+    JostItalic: require("../../assets/fonts/jost/Jost-Italic.ttf")
   };
 
   const [fontsLoaded, fontError] = useFonts(customFonts);
@@ -53,14 +54,16 @@ function RootLayoutNav() {
   return (
     // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
     <Provider store={store}>
-      <TamaguiProvider config={tamaguiConfig} defaultTheme="dark">
-        <PaperProvider>
-          <Stack>
-            <Stack.Screen name="(main)" options={{ headerShown: false }} />
-            <Stack.Screen name="category" />
-          </Stack>
-        </PaperProvider>
-      </TamaguiProvider>
+      <RootSiblingParent>
+        <TamaguiProvider config={tamaguiConfig} defaultTheme="dark">
+          <PaperProvider>
+            <Stack>
+              <Stack.Screen name="(main)" options={{ headerShown: false }} />
+              <Stack.Screen name="category" />
+            </Stack>
+          </PaperProvider>
+        </TamaguiProvider>
+      </RootSiblingParent>
     </Provider>
     // </ThemeProvider>
   );

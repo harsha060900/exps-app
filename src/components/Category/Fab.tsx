@@ -18,11 +18,11 @@ export default function Fab({ setIsOpen }:FABProps) {
       icon="plus"
       backdropColor="#000000a1"
       style={{
-        paddingBottom: 30,
+        // paddingBottom: 30,
       }}
       fabStyle={{
         backgroundColor: COLORS.primary,
-        borderRadius: 50,
+        // borderRadius: 50,
       }}
       color={"#fff"}
       actions={[]}
