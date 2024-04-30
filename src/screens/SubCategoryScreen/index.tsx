@@ -21,13 +21,13 @@ import AddCategory from "@/src/components/Category/AddCategory";
 import { SharedToast } from "@/src/shared/SharedToast";
 //
 import {
-  useGetCategoryQuery,
-  useDeleteCategoryMutation
-} from "@/src/store/services/categoryApi";
+  useGetSubCateQuery,
+  useDeleteSubCateMutation
+} from "@/src/store/services/subCateApi";
 
 export default function SubCategoryScreen() {
-  const { isFetching, data } = useGetCategoryQuery(null);
-  const [deleteCategory] = useDeleteCategoryMutation();
+  const { isFetching, data } = useGetSubCateQuery(null);
+  const [deleteCategory] = useDeleteSubCateMutation();
   const [editData, setEditData] = useState({});
   const [editId, setEditId] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -72,7 +72,7 @@ export default function SubCategoryScreen() {
         <>
           <ScrollView showsVerticalScrollIndicator={false}>
             <Accordion type="multiple" flex={1}>
-              {data?.map((ele: CateListType, ind: number) => (
+              {data?.map((ele: SubCateListType, ind: number) => (
                 <Accordion.Item value={String(ele.id)} key={ind}>
                   <XStack
                     ai={"center"}
@@ -92,7 +92,7 @@ export default function SubCategoryScreen() {
                             textTransform="capitalize"
                             fontSize={"$4"}
                           >
-                            {ele.cate_name}
+                            {ele.sub_cate_name}
                           </Text>
                         </XStack>
                       )}
@@ -120,7 +120,7 @@ export default function SubCategoryScreen() {
   );
 }
 
-type CateListType = {
+type SubCateListType = {
   id?: number;
-  cate_name: string;
+  sub_cate_name: string;
 };
