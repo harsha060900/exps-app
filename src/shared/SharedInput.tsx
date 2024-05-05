@@ -9,5 +9,6 @@ export const SharedInput = styled(Input, {
   size: "$3",
   px: 15,
   h:46,
-  letterSpacing: 0.7
+  letterSpacing: 0.7,
+  placeholderTextColor:COLORS.blur_border
 });

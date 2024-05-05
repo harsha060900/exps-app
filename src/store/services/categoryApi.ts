@@ -3,9 +3,11 @@ import { api } from "../api";
 export const categoryApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getCategory: builder.query({
-      query: () => {
+      query: (params) => {
+        console.log('P:',params);
+        
         return {
-          url: `category`
+          url: `category?search=${params}`
         };
       },
       providesTags: ["Category"]

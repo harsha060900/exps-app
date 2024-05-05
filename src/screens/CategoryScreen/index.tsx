@@ -19,23 +19,25 @@ import { COLORS } from "@/src/constants";
 // import Fab from "@/src/components/Category/Fab";
 import AddCategory from "@/src/components/Category/AddCategory";
 import { SharedToast } from "@/src/shared/SharedToast";
-// 
+//
 import {
   useGetCategoryQuery,
   useDeleteCategoryMutation
 } from "@/src/store/services/categoryApi";
+import { SharedInput } from "@/src/shared/SharedInput";
 
 export default function ListCategory() {
-  const { isFetching, data } = useGetCategoryQuery(null);
+  const [searchParams, setSearchParams] = useState("");
+  const { isFetching, data } = useGetCategoryQuery(searchParams);
   const [deleteCategory] = useDeleteCategoryMutation();
   const [editData, setEditData] = useState({});
   const [editId, setEditId] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [text, setText] = useState("")
 
   async function delAction({ data }) {
     try {
       let del = await deleteCategory(data.id);
-      console.log("id:", del);
       SharedToast(del?.data?.message, COLORS.error);
     } catch (err) {
       console.log("err:", err);
@@ -61,6 +63,7 @@ export default function ListCategory() {
       </XStack>
     );
   }
+  console.log("ss:", data);
 
   return (
     <>
@@ -69,44 +72,57 @@ export default function ListCategory() {
           <Spinner size="large" />
         </Stack>
       ) : (
-        <>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <Accordion type="multiple" flex={1}>
-              {data?.map((ele: CateListType, ind: number) => (
-                <Accordion.Item value={String(ele.id)} key={ind}>
-                  <XStack
-                    ai={"center"}
-                    borderBottomColor={"#ffffff25"}
-                    borderBottomWidth={1}
-                  >
-                    <Accordion.Trigger pl={0} fd={"row"} bw={0} flex={1}>
-                      {({ open }: any) => (
-                        <XStack ai="center" gap={8}>
-                          <FontAwesome
-                            name={`caret-${open ? "up" : "down"}`}
-                            size={20}
-                            color={COLORS.icon}
-                          />
-                          <Text
-                            color={COLORS.prime_text}
-                            textTransform="capitalize"
-                            fontSize={"$4"}
-                          >
-                            {ele.cate_name}
-                          </Text>
-                        </XStack>
-                      )}
-                    </Accordion.Trigger>
-                    {/* Action Icons */}
-                    <Action data={ele} />
-                  </XStack>
-                  <Accordion.Content>
-                    <Text color={COLORS.neutral_text}>{ele.id}</Text>
-                  </Accordion.Content>
-                </Accordion.Item>
-              ))}
-            </Accordion>
-          </ScrollView>
+        <YStack flex={1} mt={10}>
+          <SharedInput
+            value={text}
+            onChangeText={setText}
+            onBlur={()=>setSearchParams(text)}
+            placeholder="Search category"
+            borderColor={COLORS.blur_border}
+          />
+          {data.length > 0 ? (
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Accordion type="multiple" flex={1}>
+                {data?.map((ele: CateListType, ind: number) => (
+                  <Accordion.Item value={String(ele.id)} key={ind}>
+                    <XStack
+                      ai={"center"}
+                      borderBottomColor={"#ffffff25"}
+                      borderBottomWidth={1}
+                    >
+                      <Accordion.Trigger pl={0} fd={"row"} bw={0} flex={1}>
+                        {({ open }: any) => (
+                          <XStack ai="center" gap={8}>
+                            <FontAwesome
+                              name={`caret-${open ? "up" : "down"}`}
+                              size={20}
+                              color={COLORS.icon}
+                            />
+                            <Text
+                              color={COLORS.prime_text}
+                              textTransform="capitalize"
+                              fontSize={"$4"}
+                            >
+                              {ele.cate_name}
+                            </Text>
+                          </XStack>
+                        )}
+                      </Accordion.Trigger>
+                      {/* Action Icons */}
+                      <Action data={ele} />
+                    </XStack>
+                    <Accordion.Content>
+                      <Text color={COLORS.neutral_text}>{ele.id}</Text>
+                    </Accordion.Content>
+                  </Accordion.Item>
+                ))}
+              </Accordion>
+            </ScrollView>
+          ) : (
+            <YStack ai={"center"} jc={"center"} flex={1}>
+              <Text>Category not found</Text>
+            </YStack>
+          )}
           {/* <Fab setIsOpen={(data) => setDialogOpen(data)} /> */}
           <AddCategory
             editData={editData}
@@ -114,7 +130,7 @@ export default function ListCategory() {
             isOpen={dialogOpen}
             setIsOpen={(data) => setDialogOpen(data)}
           />
-        </>
+        </YStack>
       )}
     </>
   );
