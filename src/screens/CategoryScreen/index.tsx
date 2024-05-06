@@ -33,7 +33,7 @@ export default function ListCategory() {
   const [editData, setEditData] = useState({});
   const [editId, setEditId] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [text, setText] = useState("")
+  const [text, setText] = useState("");
 
   async function delAction({ data }) {
     try {
@@ -63,7 +63,24 @@ export default function ListCategory() {
       </XStack>
     );
   }
-  console.log("ss:", data);
+  function SubCateAction(data) {
+    return (
+      <XStack gap={15}>
+        <Stack
+          onPress={() => {
+            // setDialogOpen(true);
+            // setEditData(data.data);
+            // setEditId(data.data.id);
+          }}
+        >
+          <Feather name="edit-2" size={20} color={COLORS.icon} />
+        </Stack>
+        <Stack onPress={}>
+          <Feather name="trash-2" size={20} color={COLORS.icon} />
+        </Stack>
+      </XStack>
+    );
+  }
 
   return (
     <>
@@ -76,14 +93,14 @@ export default function ListCategory() {
           <SharedInput
             value={text}
             onChangeText={setText}
-            onBlur={()=>setSearchParams(text)}
+            onBlur={() => setSearchParams(text)}
             placeholder="Search category"
             borderColor={COLORS.blur_border}
           />
-          {data.length > 0 ? (
+          {data.data.length > 0 ? (
             <ScrollView showsVerticalScrollIndicator={false}>
-              <Accordion type="multiple" flex={1}>
-                {data?.map((ele: CateListType, ind: number) => (
+              <Accordion type="single" collapsible={true} flex={1}>
+                {data?.data?.map((ele: CateListType, ind: number) => (
                   <Accordion.Item value={String(ele.id)} key={ind}>
                     <XStack
                       ai={"center"}
@@ -111,9 +128,24 @@ export default function ListCategory() {
                       {/* Action Icons */}
                       <Action data={ele} />
                     </XStack>
-                    <Accordion.Content>
-                      <Text color={COLORS.neutral_text}>{ele.id}</Text>
-                    </Accordion.Content>
+                    {ele.sub_cate ? (
+                      ele.sub_cate.map((subCate, ind) => (
+                        <Accordion.Content>
+                          <XStack ai="center" jc={"space-between"}>
+                            <Text
+                              textTransform="capitalize"
+                              fontSize={"$3"}
+                              color={COLORS.neutral_text}
+                            >
+                              {subCate.sub_cate_name}
+                            </Text>
+                            <SubCateAction />
+                          </XStack>
+                        </Accordion.Content>
+                      ))
+                    ) : (
+                      <></>
+                    )}
                   </Accordion.Item>
                 ))}
               </Accordion>
@@ -139,4 +171,5 @@ export default function ListCategory() {
 type CateListType = {
   id?: number;
   cate_name: string;
+  sub_cate: [];
 };

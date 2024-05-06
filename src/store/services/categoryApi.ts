@@ -4,8 +4,7 @@ export const categoryApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getCategory: builder.query({
       query: (params) => {
-        console.log('P:',params);
-        
+        console.log("P:", params);
         return {
           url: `category?search=${params}`
         };
@@ -23,7 +22,7 @@ export const categoryApi = api.injectEndpoints({
       invalidatesTags: ["Category"]
     }),
     updateCategory: builder.mutation({
-      query: ({data, id}) => {
+      query: ({ data, id }) => {
         return {
           url: `category/${id}`,
           method: "patch",
