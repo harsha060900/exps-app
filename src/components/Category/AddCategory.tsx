@@ -32,6 +32,8 @@ import {
 type AddProps = {
   isOpen: boolean;
   setIsOpen: (data: boolean) => void;
+  setEditData: (data: {}) => void;
+  setEditId: (data: null) => void;
   editData: {} | null;
   editId: number | null;
 };
@@ -43,7 +45,9 @@ export default function AddCategory({
   isOpen,
   setIsOpen,
   editData,
-  editId
+  editId,
+  setEditData,
+  setEditId
 }: AddProps) {
   const [addCategory] = useAddCategoryMutation();
   const [updateCategory] = useUpdateCategoryMutation();
@@ -73,6 +77,8 @@ export default function AddCategory({
           data: data
         };
         res = await updateCategory(flag).unwrap();
+        setEditData({});
+        setEditId(null);
       } else {
         res = await addCategory(data).unwrap();
       }
@@ -98,6 +104,8 @@ export default function AddCategory({
             bc={"#00000099"}
             onPress={() => {
               setIsOpen(false);
+              setEditData({});
+              setEditId(null);
             }}
             key="overlay"
           />
@@ -131,6 +139,8 @@ export default function AddCategory({
                 onPress={() => {
                   setIsOpen(false);
                   reset();
+                  setEditData({});
+                  setEditId(null);
                 }}
               >
                 Cancel

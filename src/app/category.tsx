@@ -13,6 +13,8 @@ import AddCategory from "../components/Category/AddCategory";
 
 export default function HomeLayout() {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [editData, setEditData] = useState({});
+  const [editId, setEditId] = useState(null);
 
   return (
     <>
@@ -60,6 +62,8 @@ export default function HomeLayout() {
         setIsOpen={(data) => setDialogOpen(data)}
         editData={null}
         editId={null}
+        setEditData={(data) => setEditData(data)}
+        setEditId={(data) => setEditId(data)}
       />
     </>
   );

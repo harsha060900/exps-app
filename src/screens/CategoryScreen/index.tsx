@@ -12,7 +12,11 @@ import {
   Spinner
 } from "tamagui";
 // Icons
-import { Feather, FontAwesome } from "@expo/vector-icons";
+import {
+  Feather,
+  FontAwesome,
+  MaterialCommunityIcons
+} from "@expo/vector-icons";
 // Style
 import { COLORS } from "@/src/constants";
 // components
@@ -25,20 +29,40 @@ import {
   useDeleteCategoryMutation
 } from "@/src/store/services/categoryApi";
 import { SharedInput } from "@/src/shared/SharedInput";
+import AddSubCate from "@/src/components/SubCategory/AddSubCate";
+import { useDeleteSubCateMutation } from "@/src/store/services/subCateApi";
 
 export default function ListCategory() {
   const [searchParams, setSearchParams] = useState("");
+  const [text, setText] = useState("");
+
   const { isFetching, data } = useGetCategoryQuery(searchParams);
   const [deleteCategory] = useDeleteCategoryMutation();
+  const [deleteSubCate] = useDeleteSubCateMutation();
+  // cate states
   const [editData, setEditData] = useState({});
   const [editId, setEditId] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [text, setText] = useState("");
+  // sub-cate states
+  const [cateId, setCateId] = useState(null);
+  const [subCaForm, setSubCaForm] = useState(false);
+  const [editSubData, setEditSubData] = useState({});
+  const [editSubId, setEditSubId] = useState(null);
 
   async function delAction({ data }) {
     try {
       let del = await deleteCategory(data.id);
-      SharedToast(del?.data?.message, COLORS.error);
+      SharedToast(del?.data?.message, COLORS.error, COLORS.prime_red);
+    } catch (err) {
+      console.log("err:", err);
+      // SharedToast(err, COLORS.error)
+    }
+  }
+
+  async function subDelAction(data) {
+    try {
+      let del = await deleteSubCate(data.id);
+      SharedToast(del?.data?.message, COLORS.error, COLORS.prime_red);
     } catch (err) {
       console.log("err:", err);
       // SharedToast(err, COLORS.error)
@@ -47,7 +71,15 @@ export default function ListCategory() {
 
   function Action(data) {
     return (
-      <XStack gap={15}>
+      <XStack gap={12}>
+        <Stack
+          onPress={() => {
+            setSubCaForm(true);
+            setCateId(data.data.id);
+          }}
+        >
+          <Feather name="plus" size={23} color={COLORS.primary} />
+        </Stack>
         <Stack
           onPress={() => {
             setDialogOpen(true);
@@ -55,28 +87,33 @@ export default function ListCategory() {
             setEditId(data.data.id);
           }}
         >
-          <Feather name="edit-2" size={20} color={COLORS.icon} />
+          <MaterialCommunityIcons name="pencil" size={20} color={COLORS.warn} />
         </Stack>
         <Stack onPress={() => delAction(data)}>
-          <Feather name="trash-2" size={20} color={COLORS.icon} />
+          <FontAwesome name="trash" size={20} color={COLORS.prime_red} />
         </Stack>
       </XStack>
     );
   }
-  function SubCateAction(data) {
+
+  function SubCateAction({ data }) {
     return (
       <XStack gap={15}>
         <Stack
           onPress={() => {
-            // setDialogOpen(true);
-            // setEditData(data.data);
-            // setEditId(data.data.id);
+            setSubCaForm(true);
+            setEditData(data);
+            setEditId(data.id);
           }}
         >
-          <Feather name="edit-2" size={20} color={COLORS.icon} />
+          <MaterialCommunityIcons
+            name="pencil"
+            size={20}
+            color={COLORS.warn_lite}
+          />
         </Stack>
-        <Stack onPress={}>
-          <Feather name="trash-2" size={20} color={COLORS.icon} />
+        <Stack onPress={() => subDelAction(data)}>
+          <FontAwesome name="trash" size={20} color={COLORS.error_lite} />
         </Stack>
       </XStack>
     );
@@ -130,7 +167,7 @@ export default function ListCategory() {
                     </XStack>
                     {ele.sub_cate ? (
                       ele.sub_cate.map((subCate, ind) => (
-                        <Accordion.Content>
+                        <Accordion.Content key={ind} bg={"#aaaaaa20"}>
                           <XStack ai="center" jc={"space-between"}>
                             <Text
                               textTransform="capitalize"
@@ -139,7 +176,7 @@ export default function ListCategory() {
                             >
                               {subCate.sub_cate_name}
                             </Text>
-                            <SubCateAction />
+                            <SubCateAction data={subCate} />
                           </XStack>
                         </Accordion.Content>
                       ))
@@ -161,6 +198,18 @@ export default function ListCategory() {
             editId={editId}
             isOpen={dialogOpen}
             setIsOpen={(data) => setDialogOpen(data)}
+            setEditData={(data) => setEditData(data)}
+            setEditId={(data) => setEditId(data)}
+          />
+          <AddSubCate
+            isOpen={subCaForm}
+            setIsOpen={(data) => setSubCaForm(data)}
+            editData={editData}
+            setEditData={(data) => setEditData(data)}
+            editId={editId}
+            setEditId={(data) => setEditId(data)}
+            cateId={cateId}
+            setCateId={(data) => setCateId(data)}
           />
         </YStack>
       )}

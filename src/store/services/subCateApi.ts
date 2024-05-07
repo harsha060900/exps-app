@@ -18,7 +18,7 @@ export const subCateApi = api.injectEndpoints({
           body: data
         };
       },
-      invalidatesTags: ["SubCategory"]
+      invalidatesTags: ["SubCategory", "Category"]
     }),
     updateSubCate: builder.mutation({
       query: ({ data, id }) => {
@@ -28,18 +28,16 @@ export const subCateApi = api.injectEndpoints({
           body: data
         };
       },
-      invalidatesTags: ["SubCategory"]
+      invalidatesTags: ["SubCategory", "Category"]
     }),
     deleteSubCate: builder.mutation({
       query: (id) => {
-        console.log("q:", id);
-
         return {
           url: `subCategory/${id}`,
           method: "DELETE"
         };
       },
-      invalidatesTags: ["SubCategory"]
+      invalidatesTags: ["SubCategory", "Category"]
     })
   }),
   overrideExisting: true

@@ -4,7 +4,6 @@ export const categoryApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getCategory: builder.query({
       query: (params) => {
-        console.log("P:", params);
         return {
           url: `category?search=${params}`
         };
