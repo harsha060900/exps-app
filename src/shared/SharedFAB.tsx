@@ -31,24 +31,24 @@ export default function SharedFAB({ open, onStateChange }: FABProps) {
         {
           icon: "currency-inr",
           label: "Expense",
-          color: "#fff",
+          color: COLORS.prime_text,
           style: { backgroundColor: COLORS.primary, borderRadius: 50 },
-          onPress: () => console.log("Pressed star")
+          onPress: () => router.push("/expense")
         },
-        {
-          icon: () => (
-            <Ionicons
-              name="filter"
-              size={21}
-              style={{ paddingLeft: 1, paddingTop: 2 }}
-              color="#fff"
-            />
-          ),
-          label: "Sub Category",
-          color: "#fff",
-          style: { backgroundColor: COLORS.primary, borderRadius: 50 },
-          onPress: () => router.push("/subCategory")
-        },
+        // {
+        //   icon: () => (
+        //     <Ionicons
+        //       name="filter"
+        //       size={21}
+        //       style={{ paddingLeft: 1, paddingTop: 2 }}
+        //       color="#fff"
+        //     />
+        //   ),
+        //   label: "Sub Category",
+        //   color: "#fff",
+        //   style: { backgroundColor: COLORS.primary, borderRadius: 50 },
+        //   onPress: () => router.push("/subCategory")
+        // },
         {
           icon: () => (
             <MaterialIcons
@@ -59,7 +59,7 @@ export default function SharedFAB({ open, onStateChange }: FABProps) {
             />
           ),
           label: "Category",
-          color: "#fff",
+          color: COLORS.prime_text,
           style: { backgroundColor: COLORS.primary, borderRadius: 50 },
           onPress: () => router.push("/category")
         }

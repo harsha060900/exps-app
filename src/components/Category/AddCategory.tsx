@@ -1,16 +1,6 @@
 // package
 import React, { useEffect, useState } from "react";
-import {
-  XStack,
-  Text,
-  YStack,
-  View,
-  Button,
-  Input,
-  Stack,
-  Spinner,
-  Dialog
-} from "tamagui";
+import { XStack, Dialog } from "tamagui";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
 // form
 import { useForm, Controller } from "react-hook-form";
@@ -82,7 +72,7 @@ export default function AddCategory({
       } else {
         res = await addCategory(data).unwrap();
       }
-      SharedToast(res.message, COLORS.success);
+      SharedToast(res.message, COLORS.success, COLORS.prime_text);
     } catch (err) {
       console.log("err:", err);
     }
@@ -110,6 +100,7 @@ export default function AddCategory({
             key="overlay"
           />
           <Dialog.Content bg={COLORS.bg} w={320} px={25}>
+            <Dialog.Title mb={10} size={'$6'}>{editId ? "Update" : "Add"} Category</Dialog.Title>
             <Controller
               control={control}
               rules={{

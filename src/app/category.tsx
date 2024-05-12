@@ -54,7 +54,7 @@ export default function HomeLayout() {
           )
         }}
       />
-      <XStack px={20} flex={1} bg={COLORS.bg}>
+      <XStack px={22} flex={1} bg={COLORS.bg}>
         <CategoryScreen />
       </XStack>
       <AddCategory

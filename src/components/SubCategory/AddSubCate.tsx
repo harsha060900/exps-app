@@ -121,6 +121,8 @@ export default function AddSubCate({
             key="overlay"
           />
           <Dialog.Content bg={COLORS.bg} w={320} px={25}>
+          <Dialog.Title mb={10} size={'$6'}>{editId ? "Update" : "Add"} Subcategory</Dialog.Title>
+
             <Controller
               control={control}
               rules={{

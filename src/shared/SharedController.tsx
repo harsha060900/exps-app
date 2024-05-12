@@ -17,7 +17,7 @@ export const SharedController = ({
 }: ControlType) => {
 
   return (
-    <YStack mb={15} h={102}>
+    <YStack mb={10} h={102}>
       <Label size={"$3"} color={COLORS.neutral_text} letterSpacing={0.7}>
         {label}
       </Label>

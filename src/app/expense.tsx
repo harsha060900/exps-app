@@ -1,22 +1,19 @@
 // Package
 import { Stack, router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Text, XStack } from "tamagui";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { XStack } from "tamagui";
 // Icons
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/src/constants";
-import SubCategoryScreen from "@/src/screens/SubCategoryScreen";
 // Components and Screens
+import ExpenseScreen from "../screens/ExpenseScreen";
 
 export default function HomeLayout() {
-  const [dialogOpen, setDialogOpen] = useState(false);
-
   return (
     <>
       <Stack.Screen
         options={{
-          title: "Sub Category",
+          title: "Add Expense",
           headerStyle: {
             backgroundColor: COLORS.bg
           },
@@ -33,25 +30,11 @@ export default function HomeLayout() {
               color="#fff"
               onPress={() => router.back()}
             />
-          ),
-          headerRight: (props) => (
-            <Ionicons
-              name="add"
-              style={{
-                backgroundColor: COLORS.primary,
-                borderRadius: 5,
-                padding: 8,
-                marginRight: 5
-              }}
-              size={20}
-              color={"#fff"}
-              onPress={() => setDialogOpen(true)}
-            />
           )
         }}
       />
       <XStack px={22} flex={1} bg={COLORS.bg}>
-        <SubCategoryScreen />
+        <ExpenseScreen />
       </XStack>
     </>
   );
