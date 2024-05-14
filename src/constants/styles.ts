@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
   },
   selectedTextStyle: {
     color: COLORS.prime_text,
-    fontFamily: "JostRegular"
-    // fontSize: 16,
+    fontFamily: "JostRegular",
+    fontSize: 16
   },
   iconStyle: {
     width: 20,

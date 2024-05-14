@@ -3,9 +3,9 @@ import { api } from "../api";
 export const subCateApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getSubCate: builder.query({
-      query: () => {
+      query: (id) => {
         return {
-          url: `subCategory`
+          url: `subCategory?cate_id=${id}`
         };
       },
       providesTags: ["SubCategory"]

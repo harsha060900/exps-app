@@ -72,7 +72,7 @@ export default function AddCategory({
       } else {
         res = await addCategory(data).unwrap();
       }
-      SharedToast(res.message, COLORS.success, COLORS.prime_text);
+      SharedToast(res.message, COLORS.success, COLORS.primary);
     } catch (err) {
       console.log("err:", err);
     }
@@ -100,7 +100,9 @@ export default function AddCategory({
             key="overlay"
           />
           <Dialog.Content bg={COLORS.bg} w={320} px={25}>
-            <Dialog.Title mb={10} size={'$6'}>{editId ? "Update" : "Add"} Category</Dialog.Title>
+            <Dialog.Title mb={10} size={"$6"}>
+              {editId ? "Update" : "Add"} Category
+            </Dialog.Title>
             <Controller
               control={control}
               rules={{
