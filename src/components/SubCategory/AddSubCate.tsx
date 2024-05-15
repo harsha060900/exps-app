@@ -117,11 +117,14 @@ export default function AddSubCate({
               setIsOpen(false);
               setEditData({});
               setEditId(null);
+              reset();
             }}
             key="overlay"
           />
           <Dialog.Content bg={COLORS.bg} w={320} px={25}>
-          <Dialog.Title mb={10} size={'$6'}>{editId ? "Update" : "Add"} Subcategory</Dialog.Title>
+            <Dialog.Title mb={10} size={"$6"}>
+              {editId ? "Update" : "Add"} Subcategory
+            </Dialog.Title>
 
             <Controller
               control={control}
@@ -131,12 +134,14 @@ export default function AddSubCate({
               render={({ field: { onChange, onBlur, value } }) => (
                 <SharedController
                   label="Subcategory Name*"
-                  name="sub_sub_cate_name"
+                  name="sub_cate_name"
                   errors={errors}
                 >
                   <SharedInput
                     borderColor={
-                      errors.sub_cate_name ? COLORS.error : COLORS.blur_border
+                      errors.sub_cate_name
+                        ? COLORS.prime_red
+                        : COLORS.blur_border
                     }
                     onChangeText={onChange}
                     value={value}

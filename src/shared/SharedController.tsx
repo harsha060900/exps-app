@@ -15,7 +15,6 @@ export const SharedController = ({
   errors,
   children
 }: ControlType) => {
-
   return (
     <YStack mb={10} h={102}>
       <Label size={"$3"} color={COLORS.neutral_text} letterSpacing={0.7}>
@@ -26,7 +25,9 @@ export const SharedController = ({
         <ErrorMessage
           errors={errors}
           name={name}
-          render={({ message }) => <Text color={COLORS.error}>{message}</Text>}
+          render={({ message }) => (
+            <Text color={COLORS.prime_red}>{message}</Text>
+          )}
         />
       )}
     </YStack>

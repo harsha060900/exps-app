@@ -90,162 +90,180 @@ export default function ExpenseScreen() {
         </Stack>
       ) : (
         <YStack flex={1}>
-          <Controller
-            control={control}
-            rules={{
-              required: { value: true, message: "Must fill this field" }
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <SharedController label="Amount*" name="amt" errors={errors}>
-                <View pos={"relative"}>
-                  <SharedInput
+          <ScrollView>
+            <Controller
+              control={control}
+              rules={{
+                required: { value: true, message: "Must fill this field" }
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <SharedController label="Amount*" name="amt" errors={errors}>
+                  <View pos={"relative"}>
+                    <SharedInput
+                      borderColor={
+                        errors.amt ? COLORS.prime_red : COLORS.blur_border
+                      }
+                      onChangeText={onChange}
+                      value={value}
+                      paddingLeft={35}
+                      keyboardType={"number-pad"}
+                    />
+                    <MaterialCommunityIcons
+                      style={{ position: "absolute", top: 11, left: 8 }}
+                      name="currency-inr"
+                      size={24}
+                      color={COLORS.icon}
+                    />
+                  </View>
+                </SharedController>
+              )}
+              name="amt"
+            />
+            {/* Category Dropdown */}
+            <Controller
+              control={control}
+              rules={{
+                required: { value: true, message: "Must fill this field" }
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <SharedController
+                  label="Category*"
+                  name="cate_id"
+                  errors={errors}
+                >
+                  <Dropdown
+                    style={[
+                      styles.dropdown,
+                      {
+                        borderColor: errors.cate_id
+                          ? COLORS.prime_red
+                          : COLORS.blur_border
+                      }
+                    ]}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    inputSearchStyle={styles.inputSearchStyle}
+                    // iconStyle={styles.iconStyle}
+                    itemContainerStyle={{ backgroundColor: COLORS.bg }}
+                    itemTextStyle={{ fontSize: 16 }}
+                    containerStyle={styles.containerStyle}
+                    backgroundColor="#00000099"
+                    activeColor="#ffffff15"
+                    data={cateList?.data?.map((ele, ind) => ({
+                      label: ele.cate_name,
+                      value: ele.id
+                    }))}
+                    search
+                    // mode="modal"
+                    maxHeight={400}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Select category"
+                    searchPlaceholder="Search category"
+                    value={value}
+                    onChange={(item) => {
+                      onChange(item.value);
+                      setCateId(item.value);
+                    }}
+                    // renderLeftIcon={() => (
+                    //   <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+                    // )}
+                    renderItem={renderItem}
+                  />
+                </SharedController>
+              )}
+              name="cate_id"
+            />
+
+            {/* Sub Category */}
+            <Controller
+              control={control}
+              rules={{}}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <SharedController
+                  label="Subcategory"
+                  name="sub_cate_id"
+                  errors={errors}
+                >
+                  <ScrollView>
+                    <XStack gap={10}>
+                      {loading ? (
+                        <Spinner size="small" />
+                      ) : watch("cate_id") ? (
+                        subCateList?.data?.map((subCate, ind) => (
+                          <Chip
+                            // selected={value == subCate.id ? true : false}
+                            selectedColor={
+                              value == subCate.id
+                                ? COLORS.primary
+                                : COLORS.prime_text
+                            }
+                            mode="outlined"
+                            // rippleColor={COLORS.primary}
+                            style={{
+                              backgroundColor:
+                                value != subCate.id
+                                  ? "#ffffff10"
+                                  : COLORS.primary_lite,
+                              borderRadius: 50
+                            }}
+                            onPress={() => {
+                              if (value && value === subCate.id)
+                                setValue("sub_cate_id", "");
+                              else onChange(subCate.id);
+                            }}
+                            key={ind}
+                          >
+                            <Text fontSize={"$3"}>{subCate.sub_cate_name}</Text>
+                          </Chip>
+                        ))
+                      ) : (
+                        <Text
+                          ml={15}
+                          fontSize={"$3"}
+                          color={COLORS.neutral_text}
+                        >
+                          Select a category
+                        </Text>
+                      )}
+                    </XStack>
+                  </ScrollView>
+                </SharedController>
+              )}
+              name="sub_cate_id"
+            />
+
+            {/* Desc */}
+            <Controller
+              control={control}
+              rules={{}}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <SharedController
+                  label="Description"
+                  name="desc"
+                  errors={errors}
+                >
+                  <TextArea
                     //   borderColor={errors.cate_name ? COLORS.error : COLORS.blur_border}
                     borderColor={COLORS.blur_border}
                     onChangeText={onChange}
                     value={value}
-                    paddingLeft={35}
-                    keyboardType={"number-pad"}
+                    focusStyle={{ borderColor: "#fff" }}
+                    // px="15"
+                    h="46"
+                    letterSpacing={0.7}
+                    textAlignVertical="top"
                   />
-                  <MaterialCommunityIcons
-                    style={{ position: "absolute", top: 11, left: 8 }}
-                    name="currency-inr"
-                    size={24}
-                    color={COLORS.icon}
-                  />
-                </View>
-              </SharedController>
-            )}
-            name="amt"
-          />
-          {/* Category Dropdown */}
-          <Controller
-            control={control}
-            rules={{
-              required: { value: true, message: "Must fill this field" }
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <SharedController
-                label="Category*"
-                name="cate_id"
-                errors={errors}
-              >
-                <Dropdown
-                  style={styles.dropdown}
-                  placeholderStyle={styles.placeholderStyle}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  inputSearchStyle={styles.inputSearchStyle}
-                  // iconStyle={styles.iconStyle}
-                  itemContainerStyle={{ backgroundColor: COLORS.bg }}
-                  itemTextStyle={{ fontSize: 16 }}
-                  containerStyle={styles.containerStyle}
-                  backgroundColor="#00000099"
-                  activeColor="#ffffff15"
-                  data={cateList?.data?.map((ele, ind) => ({
-                    label: ele.cate_name,
-                    value: ele.id
-                  }))}
-                  search
-                  // mode="modal"
-                  maxHeight={400}
-                  labelField="label"
-                  valueField="value"
-                  placeholder="Select category"
-                  searchPlaceholder="Search category"
-                  value={value}
-                  onChange={(item) => {
-                    onChange(item.value);
-                    setCateId(item.value);
-                  }}
-                  // renderLeftIcon={() => (
-                  //   <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
-                  // )}
-                  renderItem={renderItem}
-                />
-              </SharedController>
-            )}
-            name="cate_id"
-          />
-
-          {/* Sub Category */}
-          <Controller
-            control={control}
-            rules={{}}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <SharedController
-                label="Subcategory"
-                name="sub_cate_id"
-                errors={errors}
-              >
-                <ScrollView>
-                  <XStack gap={10}>
-                    {loading ? (
-                      <Spinner size="small" />
-                    ) : watch("cate_id") ? (
-                      subCateList?.data?.map((subCate, ind) => (
-                        <Chip
-                          // selected={value == subCate.id ? true : false}
-                          selectedColor={
-                            value == subCate.id
-                              ? COLORS.primary
-                              : COLORS.prime_text
-                          }
-                          mode="outlined"
-                          // rippleColor={COLORS.primary}
-                          style={{
-                            backgroundColor:
-                              value != subCate.id
-                                ? "#ffffff10"
-                                : COLORS.primary_lite,
-                            borderRadius: 50
-                          }}
-                          onPress={() => {
-                            if (value && value === subCate.id)
-                              setValue("sub_cate_id", "");
-                            else onChange(subCate.id);
-                          }}
-                          key={ind}
-                        >
-                          <Text fontSize={"$3"}>{subCate.sub_cate_name}</Text>
-                        </Chip>
-                      ))
-                    ) : (
-                      <Text ml={15} fontSize={"$3"} color={COLORS.neutral_text}>
-                        Select a category
-                      </Text>
-                    )}
-                  </XStack>
-                </ScrollView>
-              </SharedController>
-            )}
-            name="sub_cate_id"
-          />
-
-          {/* Desc */}
-          <Controller
-            control={control}
-            rules={{}}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <SharedController label="Description" name="desc" errors={errors}>
-                <TextArea
-                  //   borderColor={errors.cate_name ? COLORS.error : COLORS.blur_border}
-                  borderColor={COLORS.blur_border}
-                  onChangeText={onChange}
-                  value={value}
-                  focusStyle={{ borderColor: "#fff" }}
-                  // px="15"
-                  h="46"
-                  letterSpacing={0.7}
-                  textAlignVertical="top"
-                />
-              </SharedController>
-            )}
-            name="desc"
-          />
-          <XStack mt={70} jc={"center"} gap={10}>
-            <SharedSaveBtn onPress={handleSubmit(handleFormSubmit)}>
-              Add
-            </SharedSaveBtn>
-          </XStack>
+                </SharedController>
+              )}
+              name="desc"
+            />
+            <XStack mt={70} jc={"center"} gap={10}>
+              <SharedSaveBtn onPress={handleSubmit(handleFormSubmit)}>
+                Add
+              </SharedSaveBtn>
+            </XStack>
+          </ScrollView>
         </YStack>
       )}
     </>

@@ -96,6 +96,7 @@ export default function AddCategory({
               setIsOpen(false);
               setEditData({});
               setEditId(null);
+              reset();
             }}
             key="overlay"
           />
@@ -116,7 +117,7 @@ export default function AddCategory({
                 >
                   <SharedInput
                     borderColor={
-                      errors.cate_name ? COLORS.error : COLORS.blur_border
+                      errors.cate_name ? COLORS.prime_red : COLORS.blur_border
                     }
                     onChangeText={onChange}
                     value={value}

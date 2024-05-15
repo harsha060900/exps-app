@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     padding: 12,
     color: COLORS.prime_text,
-    borderColor: COLORS.blur_border,
+    // borderColor: COLORS.blur_border,
     borderWidth: 1
   },
   containerStyle: {
