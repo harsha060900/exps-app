@@ -28,7 +28,7 @@ export const categoryApi = api.injectEndpoints({
           body: data
         };
       },
-      invalidatesTags: ["Category"]
+      invalidatesTags: ["Category","Expense"]
     }),
     deleteCategory: builder.mutation({
       query: (id) => {
@@ -39,7 +39,7 @@ export const categoryApi = api.injectEndpoints({
           method: "DELETE"
         };
       },
-      invalidatesTags: ["Category"]
+      invalidatesTags: ["Category","Expense"]
     })
   }),
   overrideExisting: true

@@ -1,50 +1,74 @@
 import React, { useEffect, useState } from "react";
 import { XStack, Text, YStack, Stack, View, Button } from "tamagui";
+import { router } from "expo-router";
 // icons
 import {
   MaterialCommunityIcons,
   Feather,
   FontAwesome5
 } from "@expo/vector-icons";
+//styels
 import { COLORS } from "@/src/constants";
+// components
 import SharedFAB from "@/src/shared/SharedFAB";
-import { router } from "expo-router";
+import RecentList from "@/src/components/Dashboard/RecentList";
+import SharedSpinner from "@/src/shared/SharedSpinner";
+// redux
+import { useGetExpenseQuery } from "@/src/store/services/expenseApi";
 
 export default function HomeScreen() {
   const [fabOpen, setFabOpen] = useState(false);
+  const [searchParams, setSearchParams] = useState({ orderBy: "desc" });
+  const { data, isFetching } = useGetExpenseQuery(searchParams);
+  console.log("data:", data);
 
   return (
     <YStack flex={1} px={20} pt={20}>
-      {/* AVAL BALANCE */}
-      <YStack ai="center">
-        <Text ff={"$subHead"} ml={10}>
-          Available Balance
-        </Text>
-        <XStack ai={"center"}>
-          <MaterialCommunityIcons name="currency-inr" size={34} color={COLORS.prime_text} />
-          <Text ff={"$bold"} fontSize={"$14"}>
-            1987
-          </Text>
-        </XStack>
-      </YStack>
-      {/* INCOME EXPENSE CARD */}
-      <XStack mt={20} jc="space-between">
-        <IncomeExpenseCard
-          title="Income"
-          amt={98760}
-          icon="down"
-          mr={10}
-          color={COLORS.primary}
-        />
-        <IncomeExpenseCard
-          title="Expense"
-          amt={5000}
-          icon="up"
-          ml={10}
-          color={COLORS.prime_red}
-        />
-      </XStack>
-      <SharedFAB open={fabOpen} onStateChange={(data) => setFabOpen(data)} />
+      {isFetching ? (
+        <SharedSpinner />
+      ) : (
+        <>
+          {/* AVAL BALANCE */}
+          <YStack ai="center">
+            <Text ff={"$subHead"} ml={10}>
+              Available Balance
+            </Text>
+            <XStack ai={"center"}>
+              <MaterialCommunityIcons
+                name="currency-inr"
+                size={34}
+                color={COLORS.prime_text}
+              />
+              <Text ff={"$bold"} fontSize={"$14"}>
+                1987
+              </Text>
+            </XStack>
+          </YStack>
+          {/* INCOME EXPENSE CARD */}
+          <XStack mt={20} jc="space-between" mb={25}>
+            <IncomeExpenseCard
+              title="Income"
+              amt={98760}
+              icon="down"
+              mr={10}
+              color={COLORS.primary}
+            />
+            <IncomeExpenseCard
+              title="Expense"
+              amt={5000}
+              icon="up"
+              ml={10}
+              color={COLORS.prime_red}
+            />
+          </XStack>
+          {/* Recent List */}
+          <RecentList data={data.data} />
+          <SharedFAB
+            open={fabOpen}
+            onStateChange={(data) => setFabOpen(data)}
+          />
+        </>
+      )}
     </YStack>
   );
 }
@@ -88,7 +112,7 @@ function IncomeExpenseCard({ title, amt, icon, mr = 0, ml = 0, color }: any) {
         </Text>
         <XStack ai={"center"}>
           <MaterialCommunityIcons name="currency-inr" size={24} color="#fff" />
-          <Text ff={"$medium"} fontSize={"$7"} color={'#fff'}>
+          <Text ff={"$medium"} fontSize={"$7"} color={"#fff"}>
             {amt}
           </Text>
         </XStack>

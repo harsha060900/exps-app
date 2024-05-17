@@ -92,7 +92,7 @@ const tamaguiConfig = createTamagui({
       weight: weight
     },
     subHead: {
-      family: "JostRegular",
+      family: "JostMedium",
       letterSpacing: letterSpacing,
       lineHeight: lineHeight,
       size: size,
