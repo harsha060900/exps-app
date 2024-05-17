@@ -4,10 +4,8 @@ export const expenseApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getExpense: builder.query({
       query: (param) => {
-        console.log('p:',param);
-        
         return {
-          url: `expense?orderBy=${param.orderBy}`,
+          url: `expense?orderBy=${param.orderBy}`
         };
       },
       providesTags: ["Expense"]
@@ -26,4 +24,4 @@ export const expenseApi = api.injectEndpoints({
   overrideExisting: true
 });
 
-export const { useGetExpenseQuery,useAddExpenseMutation } = expenseApi;
+export const { useGetExpenseQuery, useAddExpenseMutation } = expenseApi;

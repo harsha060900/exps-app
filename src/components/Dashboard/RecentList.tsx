@@ -6,16 +6,27 @@ import {
   Feather,
   FontAwesome5
 } from "@expo/vector-icons";
-//styels
+//styles
 import { COLORS } from "@/src/constants";
 import moment from "moment";
 
 export default function RecentList({ data }) {
   return (
     <YStack>
-      <Text fontSize={"$5"} fontFamily={"$medium"} mb={8}>
-        Recent Expenses
-      </Text>
+      <XStack jc={"space-between"} ai={"center"}>
+        <Text fontSize={"$5"} fontFamily={"$medium"} mb={8}>
+          Recent Expenses
+        </Text>
+        <View>
+          <Text
+            color={COLORS.primary}
+            fontFamily={"$medium"}
+            textDecorationLine="underline"
+          >
+            Show all
+          </Text>
+        </View>
+      </XStack>
       {data.map((ele, ind) => (
         <XStack
           bg={"#ffffff10"}
@@ -42,7 +53,7 @@ export default function RecentList({ data }) {
               {moment(ele.created).format("MMMM DD")}
             </Text>
           </YStack>
-          <YStack ai='flex-end'>
+          <YStack ai="flex-end">
             <Text fontFamily={"$medium"} fontSize={"$3"}>
               {ele.cateName}
             </Text>

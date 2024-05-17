@@ -20,7 +20,6 @@ export default function HomeScreen() {
   const [fabOpen, setFabOpen] = useState(false);
   const [searchParams, setSearchParams] = useState({ orderBy: "desc" });
   const { data, isFetching } = useGetExpenseQuery(searchParams);
-  console.log("data:", data);
 
   return (
     <YStack flex={1} px={20} pt={20}>
@@ -51,7 +50,7 @@ export default function HomeScreen() {
               amt={98760}
               icon="down"
               mr={10}
-              color={COLORS.primary}
+              color={COLORS.green1}
             />
             <IncomeExpenseCard
               title="Expense"

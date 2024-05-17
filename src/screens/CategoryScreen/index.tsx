@@ -78,7 +78,7 @@ export default function ListCategory() {
             setCateId(data.data.id);
           }}
         >
-          <Feather name="plus" size={23} color={COLORS.primary} />
+          <Feather name="plus" size={23} color={COLORS.green1} />
         </Stack>
         <Stack
           onPress={() => {

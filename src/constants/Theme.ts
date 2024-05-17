@@ -1,6 +1,8 @@
 const COLORS = {
   bg: "#191919",
-  primary: "#0FB58F",
+  green1: "#0FB58F",
+  primary: "#4682B4",
+  line_green: "#00ff2b",
   primary_lite: "#0FB58F40",
   prime_red: "#dc4c64",
   prime_yellow: "#f7b12d",
