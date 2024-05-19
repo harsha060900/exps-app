@@ -1,7 +1,7 @@
 import { COLORS } from "@/src/constants";
 import { Tabs } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 
 export default function MainLayout() {
   return (
@@ -21,7 +21,11 @@ export default function MainLayout() {
         options={{
           headerShown: false,
           tabBarIcon: ({ focused, color }) => (
-            <AntDesign name="home" size={26} color={focused ? color : COLORS.icon} />
+            <AntDesign
+              name="home"
+              size={26}
+              color={focused ? color : COLORS.icon}
+            />
           )
         }}
       />
@@ -54,9 +58,9 @@ export default function MainLayout() {
           headerShown: false,
           title: "Dashboard",
           tabBarIcon: ({ focused, color }) => (
-            <AntDesign
-              name="wallet"
-              size={26}
+            <MaterialIcons
+              name="list-alt"
+              size={28}
               color={focused ? color : COLORS.icon}
             />
           )
@@ -68,7 +72,11 @@ export default function MainLayout() {
           headerShown: false,
           title: "Dashboard",
           tabBarIcon: ({ focused, color }) => (
-            <AntDesign name="user" size={26} color={focused ? color : COLORS.icon} />
+            <AntDesign
+              name="user"
+              size={26}
+              color={focused ? color : COLORS.icon}
+            />
           )
         }}
       />

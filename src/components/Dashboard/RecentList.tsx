@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { XStack, Text, YStack, Stack, View, Button } from "tamagui";
+import moment from "moment";
 // icons
 import {
   MaterialCommunityIcons,
@@ -8,7 +9,6 @@ import {
 } from "@expo/vector-icons";
 //styles
 import { COLORS } from "@/src/constants";
-import moment from "moment";
 
 export default function RecentList({ data }) {
   return (
@@ -38,7 +38,29 @@ export default function RecentList({ data }) {
           pl={8}
           jc={"space-between"}
         >
-          <YStack>
+          <XStack gap={6}>
+            <View
+              position="relative"
+              mr={3}
+              bg={"#dc4c6435"}
+              px={10}
+              py={5}
+              borderRadius={15}
+            >
+              <FontAwesome5
+                name="money-bill-alt"
+                style={{ marginTop: 11 }}
+                size={24}
+                color={COLORS.prime_red}
+              />
+              <Feather
+                style={{ position: "absolute", top: 0, left: 14 }}
+                name={`trending-up` as keyof object}
+                size={21}
+                color={COLORS.prime_red}
+              />
+            </View>
+
             <XStack ai="center">
               <MaterialCommunityIcons
                 name="currency-inr"
@@ -49,15 +71,26 @@ export default function RecentList({ data }) {
                 {ele.amt}
               </Text>
             </XStack>
-            <Text ml={4} color={COLORS.neutral_text}>
+          </XStack>
+
+          <YStack ai="flex-end">
+            <Text ml={4} fontSize={"$3"}>
               {moment(ele.created).format("MMMM DD")}
             </Text>
-          </YStack>
-          <YStack ai="flex-end">
-            <Text fontFamily={"$medium"} fontSize={"$3"}>
-              {ele.cateName}
-            </Text>
-            <Text color={COLORS.neutral_text}>{ele.subCateName}</Text>
+            <XStack ai={"center"}>
+              <Text
+                color={COLORS.neutral_text}
+                fontFamily={"$medium"}
+                fontSize={"$2"}
+              >
+                {ele.cateName}
+              </Text>
+              {ele.subCateName && (
+                <Text color={COLORS.neutral_text} fontSize={"$2"}>
+                  {" -->"} {ele.subCateName}
+                </Text>
+              )}
+            </XStack>
           </YStack>
         </XStack>
       ))}

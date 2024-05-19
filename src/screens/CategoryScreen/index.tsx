@@ -52,7 +52,7 @@ export default function ListCategory() {
   async function delAction({ data }) {
     try {
       let del = await deleteCategory(data.id);
-      SharedToast(del?.data?.message, COLORS.error, COLORS.prime_red);
+      SharedToast(del?.data?.message, COLORS.error_lite, COLORS.prime_red);
     } catch (err) {
       console.log("err:", err);
       // SharedToast(err, COLORS.error)
@@ -62,7 +62,7 @@ export default function ListCategory() {
   async function subDelAction(data) {
     try {
       let del = await deleteSubCate(data.id);
-      SharedToast(del?.data?.message, COLORS.error, COLORS.prime_red);
+      SharedToast(del?.data?.message, COLORS.error_lite, COLORS.prime_red);
     } catch (err) {
       console.log("err:", err);
       // SharedToast(err, COLORS.error)

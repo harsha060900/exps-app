@@ -1,9 +1,9 @@
 const COLORS = {
   bg: "#191919",
   green1: "#0FB58F",
-  primary: "#4682B4",
+  primary: "#0FB58F",
   line_green: "#00ff2b",
-  primary_lite: "#0FB58F40",
+  primary_lite: "#0FB58F24",
   prime_red: "#dc4c64",
   prime_yellow: "#f7b12d",
   // prime_red: "#D95A5A",
@@ -14,7 +14,7 @@ const COLORS = {
   success: "#c7dfdb",
   error: "#e7c9ce",
   warn: "#f7b12d",
-  error_lite: "#dc4c64d4",
+  error_lite: "#dc4c6435",
   warn_lite: "#f7b12dd4"
 };
 

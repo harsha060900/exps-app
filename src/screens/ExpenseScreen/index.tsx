@@ -41,7 +41,7 @@ export default function ExpenseScreen() {
     defaultValues: {
       amt: "",
       cate_id: "",
-      sub_cate_id: "",
+      sub_cate_id: null,
       desc: ""
     }
   });
@@ -73,11 +73,13 @@ export default function ExpenseScreen() {
 
   const handleFormSubmit = async (value) => {
     let res;
+    console.log('v:',value);
+    
     try {
       res = await addExpense(value).unwrap();
       SharedToast(res.message, COLORS.success, COLORS.primary);
     } catch (err) {
-      console.log("err:", err);
+      console.log("err:", err.data.message);
     }
     reset();
   };
@@ -190,33 +192,56 @@ export default function ExpenseScreen() {
                       {loading ? (
                         <Spinner size="small" />
                       ) : watch("cate_id") ? (
-                        subCateList?.data?.map((subCate, ind) => (
+                        subCateList?.data?.length !== 0 ? (
+                          subCateList?.data?.map((subCate, ind) => (
+                            <Chip
+                              // selected={value == subCate.id ? true : false}
+                              selectedColor={
+                                value == subCate.id
+                                  ? COLORS.primary
+                                  : COLORS.prime_text
+                              }
+                              mode="outlined"
+                              style={{
+                                backgroundColor:
+                                  value != subCate.id
+                                    ? "#ffffff10"
+                                    : COLORS.primary_lite,
+                                borderRadius: 50
+                              }}
+                              onPress={() => {
+                                if (value && value === subCate.id)
+                                  setValue("sub_cate_id", null);
+                                else onChange(subCate.id);
+                              }}
+                              key={ind}
+                            >
+                              <Text
+                                fontSize={"$3"}
+                                color={
+                                  value == subCate.id
+                                    ? COLORS.primary
+                                    : COLORS.prime_text
+                                }
+                              >
+                                {subCate.sub_cate_name}
+                              </Text>
+                            </Chip>
+                          ))
+                        ) : (
                           <Chip
-                            // selected={value == subCate.id ? true : false}
-                            selectedColor={
-                              value == subCate.id
-                                ? COLORS.primary
-                                : COLORS.prime_text
-                            }
+                            selectedColor={COLORS.primary}
                             mode="outlined"
-                            // rippleColor={COLORS.primary}
                             style={{
-                              backgroundColor:
-                                value != subCate.id
-                                  ? "#ffffff10"
-                                  : COLORS.primary_lite,
+                              backgroundColor: COLORS.primary_lite,
                               borderRadius: 50
                             }}
-                            onPress={() => {
-                              if (value && value === subCate.id)
-                                setValue("sub_cate_id", "");
-                              else onChange(subCate.id);
-                            }}
-                            key={ind}
                           >
-                            <Text fontSize={"$3"}>{subCate.sub_cate_name}</Text>
+                            <Text fontSize={"$3"} color={COLORS.primary}>
+                              No subcategory found
+                            </Text>
                           </Chip>
-                        ))
+                        )
                       ) : (
                         <Text
                           ml={15}

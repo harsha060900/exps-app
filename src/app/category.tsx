@@ -5,6 +5,7 @@ import { Text, XStack } from "tamagui";
 import { SafeAreaView } from "react-native-safe-area-context";
 // Icons
 import { Ionicons } from "@expo/vector-icons";
+// style
 import { COLORS } from "@/src/constants";
 // Components and Screens
 import HomeScreen from "@/src/screens/HomeScreen";
@@ -24,7 +25,7 @@ export default function HomeLayout() {
           headerStyle: {
             backgroundColor: COLORS.bg
           },
-          headerTintColor: "#fff",
+          headerTintColor: COLORS.prime_text,
           headerTitleStyle: {
             fontFamily: "JostSemiBold"
           },

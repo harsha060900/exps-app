@@ -36,7 +36,7 @@ export default function SubCategoryScreen() {
     try {
       let del = await deleteCategory(data.id);
       console.log("id:", del);
-      SharedToast(del?.data?.message, COLORS.error);
+      SharedToast(del?.data?.message, COLORS.error_lite, COLORS.prime_red);
     } catch (err) {
       console.log("err:", err);
       // SharedToast(err, COLORS.error)
