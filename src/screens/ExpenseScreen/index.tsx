@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { Keyboard, StyleSheet } from "react-native";
 import {
   XStack,
   Text,
@@ -13,6 +13,7 @@ import {
 } from "tamagui";
 import { Chip } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 // form
 import { useForm, Controller } from "react-hook-form";
 // compo
@@ -28,6 +29,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useGetCategoryQuery } from "@/src/store/services/categoryApi";
 import { useGetSubCateQuery } from "@/src/store/services/subCateApi";
 import { useAddExpenseMutation } from "@/src/store/services/expenseApi";
+import moment from "moment";
 
 export default function ExpenseScreen() {
   const {
@@ -42,10 +44,13 @@ export default function ExpenseScreen() {
       amt: "",
       cate_id: "",
       sub_cate_id: null,
+      period: "",
       desc: ""
     }
   });
   const [cateId, setCateId] = useState("");
+  const [dateOpen, setDateOpen] = useState(false);
+  const [date, setDate] = useState(new Date());
   const { data: cateList, isFetching } = useGetCategoryQuery("");
   const { data: subCateList, isFetching: loading } = useGetSubCateQuery(
     cateId,
@@ -71,10 +76,15 @@ export default function ExpenseScreen() {
     );
   };
 
+  const handleDateChange = (val) => {
+    setValue("period", val);
+    setDateOpen(false);
+  };
+
   const handleFormSubmit = async (value) => {
     let res;
-    console.log('v:',value);
-    
+    console.log("v:", value);
+
     try {
       res = await addExpense(value).unwrap();
       SharedToast(res.message, COLORS.success, COLORS.primary);
@@ -120,6 +130,43 @@ export default function ExpenseScreen() {
                 </SharedController>
               )}
               name="amt"
+            />
+            {/* Date Picker */}
+            <Controller
+              control={control}
+              rules={{
+                required: { value: true, message: "Must fill this field" }
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <SharedController label="Period*" name="period" errors={errors}>
+                  <View pos={"relative"}>
+                    <SharedInput
+                      borderColor={
+                        errors.amt ? COLORS.prime_red : COLORS.blur_border
+                      }
+                      value={moment(value).format("MMM DD YYYY HH:mm")}
+                      paddingLeft={35}
+                      onPress={() => setDateOpen(true)}
+                      // disabled
+                      onFocus={() => Keyboard.dismiss()}
+                    />
+                    <MaterialCommunityIcons
+                      style={{ position: "absolute", top: 11, left: 8 }}
+                      name="calendar-month-outline"
+                      size={24}
+                      color={COLORS.icon}
+                    />
+                    <DateTimePickerModal
+                      isVisible={dateOpen}
+                      mode="datetime"
+                      is24Hour={true}
+                      onConfirm={handleDateChange}
+                      onCancel={() => setDateOpen(false)}
+                    />
+                  </View>
+                </SharedController>
+              )}
+              name="period"
             />
             {/* Category Dropdown */}
             <Controller

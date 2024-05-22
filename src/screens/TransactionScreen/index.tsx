@@ -13,10 +13,15 @@ import {
 import { COLORS } from "@/src/constants";
 // redux
 import { useGetExpenseQuery } from "@/src/store/services/expenseApi";
+import SharedSpinner from "@/src/shared/SharedSpinner";
+import SharedFAB from "@/src/shared/SharedFAB";
 
 export default function TransactionScreen() {
+  const [fabOpen, setFabOpen] = useState(false);
   const [searchParams, setSearchParams] = useState({ orderBy: "desc" });
   const { data, isFetching } = useGetExpenseQuery(searchParams);
+
+  console.log("data:", data.data.length);
 
   function Action() {
     return (
@@ -50,59 +55,70 @@ export default function TransactionScreen() {
         }}
       />
       <YStack mt={10} flex={1} gap={20}>
-        {data?.data?.map((ele, ind) => (
-          <XStack
-            bg={"#ffffff10"}
-            borderRadius={8}
-            // mb={10}
-            py={8}
-            pr={12}
-            pl={8}
-            jc={"space-between"}
-            key={ind}
-          >
-            <YStack gap={8}>
-              <XStack ai="center">
-                <MaterialCommunityIcons
-                  name="currency-inr"
-                  size={15}
-                  color={COLORS.icon}
-                />
-                <Text ml={2} fontFamily={"$medium"} fontSize={"$4"}>
-                  {ele.amt}
-                </Text>
-              </XStack>
-              {/* cate and sub cate */}
-              <XStack ai={"center"} ml={18}>
-                <Text
-                  textTransform="capitalize"
-                  color={COLORS.neutral_text}
-                  fontFamily={"$medium"}
-                  fontSize={"$2"}
-                >
-                  {ele.cateName}
-                </Text>
-                {ele.subCateName && (
+        {isFetching ? (
+          <SharedSpinner />
+        ) : data.data.length === 0 ? (
+          <XStack flex={1} jc={"center"} ai={"center"}>
+            <Text fontSize={"$4"} color={COLORS.neutral_text}>
+              No transactions made
+            </Text>
+          </XStack>
+        ) : (
+          data?.data?.map((ele, ind) => (
+            <XStack
+              bg={"#ffffff10"}
+              borderRadius={8}
+              // mb={10}
+              py={8}
+              pr={12}
+              pl={8}
+              jc={"space-between"}
+              key={ind}
+            >
+              <YStack gap={8}>
+                <XStack ai="center">
+                  <MaterialCommunityIcons
+                    name="currency-inr"
+                    size={15}
+                    color={COLORS.icon}
+                  />
+                  <Text ml={2} fontFamily={"$medium"} fontSize={"$4"}>
+                    {ele.amt}
+                  </Text>
+                </XStack>
+                {/* cate and sub cate */}
+                <XStack ai={"center"} ml={18}>
                   <Text
                     textTransform="capitalize"
                     color={COLORS.neutral_text}
+                    fontFamily={"$medium"}
                     fontSize={"$2"}
                   >
-                    {" -->"} {ele.subCateName}
+                    {ele.cateName}
                   </Text>
-                )}
-              </XStack>
-            </YStack>
+                  {ele.subCateName && (
+                    <Text
+                      textTransform="capitalize"
+                      color={COLORS.neutral_text}
+                      fontSize={"$2"}
+                    >
+                      {" -->"} {ele.subCateName}
+                    </Text>
+                  )}
+                </XStack>
+              </YStack>
 
-            <YStack ai="flex-end" gap={8}>
-              <Text ml={4} fontSize={"$3"}>
-                {moment(ele.created).format("MMMM DD")}
-              </Text>
-              <Action />
-            </YStack>
-          </XStack>
-        ))}
+              <YStack ai="flex-end" gap={8}>
+                <Text ml={4} fontSize={"$3"}>
+                  {moment(ele.created).format("MMMM DD")}
+                </Text>
+                <Action />
+              </YStack>
+            </XStack>
+          ))
+        )}
       </YStack>
+      <SharedFAB open={fabOpen} onStateChange={(data) => setFabOpen(data)} />
     </>
   );
 }

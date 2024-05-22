@@ -9,15 +9,16 @@ import {
 } from "@expo/vector-icons";
 //styles
 import { COLORS } from "@/src/constants";
+import { router } from "expo-router";
 
 export default function RecentList({ data }) {
   return (
     <YStack>
       <XStack jc={"space-between"} ai={"center"}>
         <Text fontSize={"$5"} fontFamily={"$medium"} mb={8}>
-          Recent Expenses
+          Recent Transactions
         </Text>
-        <View>
+        <View onPress={() => router.push("/transactions")}>
           <Text
             color={COLORS.primary}
             fontFamily={"$medium"}
@@ -27,73 +28,76 @@ export default function RecentList({ data }) {
           </Text>
         </View>
       </XStack>
-      {data.map((ele, ind) => (
-        <XStack
-          bg={"#ffffff10"}
-          borderRadius={8}
-          key={ind}
-          my={5}
-          py={8}
-          pr={12}
-          pl={8}
-          jc={"space-between"}
-        >
-          <XStack gap={6}>
-            <View
-              position="relative"
-              mr={3}
-              bg={"#dc4c6435"}
-              px={10}
-              py={5}
-              borderRadius={15}
+      {data.map(
+        (ele, ind) =>
+          ind < 4 && (
+            <XStack
+              bg={"#ffffff10"}
+              borderRadius={8}
+              key={ind}
+              my={5}
+              py={8}
+              pr={12}
+              pl={8}
+              jc={"space-between"}
             >
-              <FontAwesome5
-                name="money-bill-alt"
-                style={{ marginTop: 11 }}
-                size={24}
-                color={COLORS.prime_red}
-              />
-              <Feather
-                style={{ position: "absolute", top: 0, left: 14 }}
-                name={`trending-up` as keyof object}
-                size={21}
-                color={COLORS.prime_red}
-              />
-            </View>
+              <XStack gap={6}>
+                <View
+                  position="relative"
+                  mr={3}
+                  bg={"#dc4c6435"}
+                  px={10}
+                  py={5}
+                  borderRadius={15}
+                >
+                  <FontAwesome5
+                    name="money-bill-alt"
+                    style={{ marginTop: 11 }}
+                    size={24}
+                    color={COLORS.prime_red}
+                  />
+                  <Feather
+                    style={{ position: "absolute", top: 0, left: 14 }}
+                    name={`trending-up` as keyof object}
+                    size={21}
+                    color={COLORS.prime_red}
+                  />
+                </View>
 
-            <XStack ai="center">
-              <MaterialCommunityIcons
-                name="currency-inr"
-                size={15}
-                color={COLORS.icon}
-              />
-              <Text ml={2} fontFamily={"$medium"} fontSize={"$4"}>
-                {ele.amt}
-              </Text>
-            </XStack>
-          </XStack>
+                <XStack ai="center">
+                  <MaterialCommunityIcons
+                    name="currency-inr"
+                    size={15}
+                    color={COLORS.icon}
+                  />
+                  <Text ml={2} fontFamily={"$medium"} fontSize={"$4"}>
+                    {ele.amt}
+                  </Text>
+                </XStack>
+              </XStack>
 
-          <YStack ai="flex-end">
-            <Text ml={4} fontSize={"$3"}>
-              {moment(ele.created).format("MMMM DD")}
-            </Text>
-            <XStack ai={"center"}>
-              <Text
-                color={COLORS.neutral_text}
-                fontFamily={"$medium"}
-                fontSize={"$2"}
-              >
-                {ele.cateName}
-              </Text>
-              {ele.subCateName && (
-                <Text color={COLORS.neutral_text} fontSize={"$2"}>
-                  {" -->"} {ele.subCateName}
+              <YStack ai="flex-end">
+                <Text ml={4} fontSize={"$3"}>
+                  {moment(ele.period).format("MMMM DD")}
                 </Text>
-              )}
+                <XStack ai={"center"}>
+                  <Text
+                    color={COLORS.neutral_text}
+                    fontFamily={"$medium"}
+                    fontSize={"$2"}
+                  >
+                    {ele.cateName}
+                  </Text>
+                  {ele.subCateName && (
+                    <Text color={COLORS.neutral_text} fontSize={"$2"}>
+                      {" -->"} {ele.subCateName}
+                    </Text>
+                  )}
+                </XStack>
+              </YStack>
             </XStack>
-          </YStack>
-        </XStack>
-      ))}
+          )
+      )}
     </YStack>
   );
 }

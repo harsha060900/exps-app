@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FAB } from "react-native-paper";
+import { FAB, Portal } from "react-native-paper";
 import { router } from "expo-router";
 // icons
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
@@ -13,7 +13,7 @@ type FABProps = {
 
 export default function SharedFAB({ open, onStateChange }: FABProps) {
   return (
-    // <Portal>
+    // <Portal.Host>
     <FAB.Group
       open={open}
       visible
@@ -71,6 +71,6 @@ export default function SharedFAB({ open, onStateChange }: FABProps) {
       //   }
       // }}
     />
-    // </Portal>
+    // </Portal.Host>
   );
 }
