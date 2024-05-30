@@ -5,6 +5,8 @@ import { Slot, Stack, SplashScreen } from "expo-router";
 import { useEffect } from "react";
 
 import { TamaguiProvider } from "tamagui";
+import { PortalProvider } from "@tamagui/portal";
+
 import "@tamagui/core/reset.css";
 import tamaguiConfig from "@/tamagui.config";
 import { PaperProvider } from "react-native-paper";
@@ -54,17 +56,19 @@ function RootLayoutNav() {
   return (
     // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
     <Provider store={store}>
-      <RootSiblingParent>
-        <TamaguiProvider config={tamaguiConfig} defaultTheme="dark">
-          <PaperProvider>
-            <Stack>
-              <Stack.Screen name="(main)" options={{ headerShown: false }} />
-              <Stack.Screen name="category" />
-              <Stack.Screen name="subCategory" />
-            </Stack>
-          </PaperProvider>
-        </TamaguiProvider>
-      </RootSiblingParent>
+      <PortalProvider shouldAddRootHost>
+        <RootSiblingParent>
+          <TamaguiProvider config={tamaguiConfig} defaultTheme="dark">
+            <PaperProvider>
+              <Stack>
+                <Stack.Screen name="(main)" options={{ headerShown: false }} />
+                <Stack.Screen name="category" />
+                <Stack.Screen name="subCategory" />
+              </Stack>
+            </PaperProvider>
+          </TamaguiProvider>
+        </RootSiblingParent>
+      </PortalProvider>
     </Provider>
     // </ThemeProvider>
   );

@@ -1,5 +1,6 @@
 const COLORS = {
   bg: "#191919",
+  card_bg: "#ffffff10",
   green1: "#0FB58F",
   primary: "#0FB58F",
   line_green: "#00ff2b",

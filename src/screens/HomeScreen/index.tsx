@@ -18,7 +18,11 @@ import { useGetExpenseQuery } from "@/src/store/services/expenseApi";
 
 export default function HomeScreen() {
   const [fabOpen, setFabOpen] = useState(false);
-  const [searchParams, setSearchParams] = useState({ orderBy: "desc" });
+  const [searchParams, setSearchParams] = useState({
+    orderBy: "desc",
+    start: "",
+    end: ""
+  });
   const { data, isFetching } = useGetExpenseQuery(searchParams);
 
   return (

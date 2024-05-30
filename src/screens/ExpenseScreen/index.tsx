@@ -252,7 +252,7 @@ export default function ExpenseScreen() {
                               style={{
                                 backgroundColor:
                                   value != subCate.id
-                                    ? "#ffffff10"
+                                    ? COLORS.card_bg
                                     : COLORS.primary_lite,
                                 borderRadius: 50
                               }}

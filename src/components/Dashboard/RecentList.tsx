@@ -32,7 +32,7 @@ export default function RecentList({ data }) {
         (ele, ind) =>
           ind < 4 && (
             <XStack
-              bg={"#ffffff10"}
+              bg={COLORS.card_bg}
               borderRadius={8}
               key={ind}
               my={5}
