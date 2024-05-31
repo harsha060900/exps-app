@@ -19,6 +19,16 @@ export const expenseApi = api.injectEndpoints({
         };
       },
       invalidatesTags: ["Expense"]
+    }),
+    updateExpense: builder.mutation({
+      query: (data) => {
+        return {
+          url: `expense/${data.id}`,
+          method: "PUT",
+          body: data
+        };
+      },
+      invalidatesTags: ["Expense"]
     })
   }),
   overrideExisting: true
