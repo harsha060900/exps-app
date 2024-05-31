@@ -24,6 +24,8 @@ import { COLORS } from "@/src/constants";
 import { useGetExpenseQuery } from "@/src/store/services/expenseApi";
 import SharedSpinner from "@/src/shared/SharedSpinner";
 import SharedFAB from "@/src/shared/SharedFAB";
+import { useDispatch, useSelector } from "react-redux";
+import { expenseState, setExpenseEdit } from "@/src/store/slices/expenseSlice";
 
 export default function TransactionScreen() {
   const [fabOpen, setFabOpen] = useState(false);
@@ -38,11 +40,18 @@ export default function TransactionScreen() {
     end: ""
   });
   const { data, isFetching } = useGetExpenseQuery(searchParams);
+  const dispatch = useDispatch();
+  const expStore = useSelector(expenseState);
 
-  function Action() {
+  function Action(item) {
     return (
       <XStack gap={8}>
-        <View>
+        <View
+          onPress={() => {
+            dispatch(setExpenseEdit(item));
+            router.push("/expense");
+          }}
+        >
           <MaterialCommunityIcons name="pencil" size={20} color={COLORS.warn} />
         </View>
         <Separator borderRightColor={COLORS.blur_border} vertical />
@@ -253,7 +262,7 @@ export default function TransactionScreen() {
                         <Text ml={4} fontSize={"$3"}>
                           {moment(ele.created).format("MMMM DD")}
                         </Text>
-                        <Action />
+                        <Action item={ele} />
                       </YStack>
                     </XStack>
                   ))}

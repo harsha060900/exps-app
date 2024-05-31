@@ -30,6 +30,8 @@ import { useGetCategoryQuery } from "@/src/store/services/categoryApi";
 import { useGetSubCateQuery } from "@/src/store/services/subCateApi";
 import { useAddExpenseMutation } from "@/src/store/services/expenseApi";
 import moment from "moment";
+import { expenseState } from "@/src/store/slices/expenseSlice";
+import { useSelector } from "react-redux";
 
 export default function ExpenseScreen() {
   const {
@@ -59,6 +61,10 @@ export default function ExpenseScreen() {
     }
   );
   const [addExpense] = useAddExpenseMutation();
+  const expStore = useSelector(expenseState);
+  useEffect(() => {
+    console.log("sstore;", expStore);
+  }, []);
 
   const renderItem = (item) => {
     return (
@@ -83,8 +89,6 @@ export default function ExpenseScreen() {
 
   const handleFormSubmit = async (value) => {
     let res;
-    console.log("v:", value);
-
     try {
       res = await addExpense(value).unwrap();
       SharedToast(res.message, COLORS.success, COLORS.primary);
