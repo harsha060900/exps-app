@@ -21,11 +21,20 @@ export const expenseApi = api.injectEndpoints({
       invalidatesTags: ["Expense"]
     }),
     updateExpense: builder.mutation({
-      query: (data) => {
+      query: ({ data, id }) => {
         return {
-          url: `expense/${data.id}`,
+          url: `expense/${id}`,
           method: "PUT",
           body: data
+        };
+      },
+      invalidatesTags: ["Expense"]
+    }),
+    deleteExpense: builder.mutation({
+      query: (id) => {
+        return {
+          url: `expense/${id}`,
+          method: "DELETE"
         };
       },
       invalidatesTags: ["Expense"]
@@ -34,4 +43,9 @@ export const expenseApi = api.injectEndpoints({
   overrideExisting: true
 });
 
-export const { useGetExpenseQuery, useAddExpenseMutation } = expenseApi;
+export const {
+  useGetExpenseQuery,
+  useAddExpenseMutation,
+  useUpdateExpenseMutation,
+  useDeleteExpenseMutation
+} = expenseApi;

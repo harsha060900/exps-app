@@ -52,7 +52,7 @@ export default function ListCategory() {
   async function delAction({ data }) {
     try {
       let del = await deleteCategory(data.id);
-      SharedToast(del?.data?.message, COLORS.error_lite, COLORS.prime_red);
+      SharedToast(del?.data?.message, COLORS.primary_lite, COLORS.primary);
     } catch (err) {
       console.log("err:", err);
       // SharedToast(err, COLORS.error)

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { revertAll } from "../action";
 
 const initialState = {
   editExpense: {
@@ -19,7 +20,8 @@ const expenseSlice = createSlice({
       //   console.log("slice", state, action);
       state.editExpense = action.payload.item;
     }
-  }
+  },
+  extraReducers: (builder) => builder.addCase(revertAll, () => initialState)
 });
 
 export const { setExpenseEdit } = expenseSlice.actions;
