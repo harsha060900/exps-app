@@ -238,7 +238,7 @@ export default function TransactionScreen() {
                       key={ind}
                       mb={15}
                     >
-                      <YStack gap={5}>
+                      <YStack gap={5} jc="center">
                         <XStack ai="center">
                           <MaterialCommunityIcons
                             name="currency-inr"
@@ -251,21 +251,33 @@ export default function TransactionScreen() {
                         </XStack>
                         {/* cate and sub cate */}
                         <XStack ai={"center"} ml={18}>
-                          <Text
-                            textTransform="capitalize"
-                            color={COLORS.neutral_text}
-                            fontFamily={"$medium"}
-                            fontSize={"$2"}
-                          >
-                            {ele.cateName}
-                          </Text>
-                          {ele.subCateName && (
+                          {ele.cateName ? (
+                            <>
+                              <Text
+                                textTransform="capitalize"
+                                color={COLORS.neutral_text}
+                                fontFamily={"$medium"}
+                                fontSize={"$2"}
+                              >
+                                {ele.cateName}
+                              </Text>
+                              {ele.subCateName && (
+                                <Text
+                                  textTransform="capitalize"
+                                  color={COLORS.neutral_text}
+                                  fontSize={"$2"}
+                                >
+                                  {" -->"} {ele.subCateName}
+                                </Text>
+                              )}
+                            </>
+                          ) : (
                             <Text
                               textTransform="capitalize"
                               color={COLORS.neutral_text}
                               fontSize={"$2"}
                             >
-                              {" -->"} {ele.subCateName}
+                              {ele.type}
                             </Text>
                           )}
                         </XStack>

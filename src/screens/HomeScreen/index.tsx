@@ -43,7 +43,7 @@ export default function HomeScreen() {
                 color={COLORS.prime_text}
               />
               <Text ff={"$bold"} fontSize={"$14"}>
-                1987
+                {data.balance}
               </Text>
             </XStack>
           </YStack>
@@ -51,14 +51,14 @@ export default function HomeScreen() {
           <XStack mt={20} jc="space-between" mb={25}>
             <IncomeExpenseCard
               title="Income"
-              amt={98760}
+              amt={data.totInc}
               icon="down"
               mr={10}
               color={COLORS.green1}
             />
             <IncomeExpenseCard
               title="Expense"
-              amt={5000}
+              amt={data.totExp}
               icon="up"
               ml={10}
               color={COLORS.prime_red}
