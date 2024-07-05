@@ -46,7 +46,8 @@
     "react-native-svg": "^15.3.0",
     "react-native-web": "~0.19.6",
     "react-redux": "^9.1.1",
-    "tamagui": "^1.91.5"
+    "tamagui": "^1.91.5",
+    "victory-native": "^37.0.3-next.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

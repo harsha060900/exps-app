@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { XStack, Text, YStack, Stack, View, Button } from "tamagui";
+import { XStack, Text, YStack, Stack, View, Button, ScrollView } from "tamagui";
 import { router } from "expo-router";
 // icons
 import {
@@ -31,7 +31,7 @@ export default function HomeScreen() {
       {isFetching ? (
         <SharedSpinner />
       ) : (
-        <>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {/* AVAL BALANCE */}
           <YStack ai="center">
             <Text ff={"$subHead"} ml={10}>
@@ -73,7 +73,7 @@ export default function HomeScreen() {
             open={fabOpen}
             onStateChange={(data) => setFabOpen(data)}
           />
-        </>
+        </ScrollView>
       )}
     </YStack>
   );
