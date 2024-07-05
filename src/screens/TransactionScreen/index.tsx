@@ -30,9 +30,13 @@ import SharedFAB from "@/src/shared/SharedFAB";
 import { useDispatch, useSelector } from "react-redux";
 import { expenseState, setExpenseEdit } from "@/src/store/slices/expenseSlice";
 import { SharedToast } from "@/src/shared/SharedToast";
+import Income from "@/src/components/Income";
 
 export default function TransactionScreen() {
   const [fabOpen, setFabOpen] = useState(false);
+  const [editIncomeOpen, setEditIncomeOpen] = useState(false);
+  const [editData, setEditData] = useState({});
+
   const [searchParams, setSearchParams] = useState({
     orderBy: "desc",
     start: "",
@@ -62,8 +66,13 @@ export default function TransactionScreen() {
       <XStack gap={8}>
         <View
           onPress={() => {
-            dispatch(setExpenseEdit(item));
-            router.push("/expense");
+            if (item.item.type === "income") {
+              setEditData(item.item);
+              setEditIncomeOpen(true);
+            } else {
+              dispatch(setExpenseEdit(item));
+              router.push("/expense");
+            }
           }}
         >
           <MaterialCommunityIcons name="pencil" size={20} color={COLORS.warn} />
@@ -292,6 +301,12 @@ export default function TransactionScreen() {
                     </XStack>
                   ))}
                 </ScrollView>
+                <Income
+                  isOpen={editIncomeOpen}
+                  setIsOpen={(data) => setEditIncomeOpen(data)}
+                  editData={editData}
+                  setEditData={(data) => {}}
+                />
               </>
             )}
           </>

@@ -24,9 +24,9 @@ type AddProps = {
   isOpen: boolean;
   setIsOpen: (data: boolean) => void;
   setEditData: (data: {}) => void;
-  setEditId: (data: null) => void;
   editData: {} | null;
-  editId: number | null;
+  // setEditId: (data: null) => void;
+  // editId: number | null;
 };
 
 type FormType = {
@@ -54,17 +54,16 @@ export default function Income({
     }
   });
   const [dateOpen, setDateOpen] = useState(false);
+  const [incomeId, setIncomeId] = useState(null);
   const [addExpense] = useAddExpenseMutation();
   const [updateExpense] = useUpdateExpenseMutation();
 
   async function handleFormSubmit(value: FormType) {
     let res;
-    console.log("V:", value);
-
     try {
       if (!editData) res = await addExpense(value).unwrap();
       else {
-        res = await updateExpense({ data: value, id: expenseId }).unwrap();
+        res = await updateExpense({ data: value, id: incomeId }).unwrap();
       }
       SharedToast(res.message, COLORS.success, COLORS.primary);
     } catch (err) {
@@ -80,10 +79,11 @@ export default function Income({
 
   useEffect(() => {
     if (editData?.id) {
+      setIncomeId(editData.id);
       setValue("amt", String(editData.amt));
       setValue("period", moment(editData.period).format("yyyy-MM-DD HH:mm:ss"));
     }
-  }, []);
+  }, [editData]);
 
   return (
     <Dialog modal open={isOpen}>
@@ -99,7 +99,7 @@ export default function Income({
         />
         <Dialog.Content bg={COLORS.bg} w={320} px={25}>
           <Dialog.Title mb={10} size={"$6"}>
-            {editData ? "Update" : "Add"} Expense
+            {editData ? "Update" : "Add"} Income
           </Dialog.Title>
           <Controller
             control={control}

@@ -15,6 +15,7 @@ import RecentList from "@/src/components/Dashboard/RecentList";
 import SharedSpinner from "@/src/shared/SharedSpinner";
 // redux
 import { useGetExpenseQuery } from "@/src/store/services/expenseApi";
+import HomePieChart from "@/src/components/Dashboard/PieChart";
 
 export default function HomeScreen() {
   const [fabOpen, setFabOpen] = useState(false);
@@ -64,6 +65,8 @@ export default function HomeScreen() {
               color={COLORS.prime_red}
             />
           </XStack>
+          {/* Charts */}
+          <HomePieChart />
           {/* Recent List */}
           <RecentList data={data.data} />
           <SharedFAB
