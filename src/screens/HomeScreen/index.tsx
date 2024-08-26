@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { XStack, Text, YStack, Stack, View, Button } from "tamagui";
+import { XStack, Text, YStack, Stack, View, Button, ScrollView } from "tamagui";
 import { router } from "expo-router";
 // icons
 import {
@@ -15,6 +15,7 @@ import RecentList from "@/src/components/Dashboard/RecentList";
 import SharedSpinner from "@/src/shared/SharedSpinner";
 // redux
 import { useGetExpenseQuery } from "@/src/store/services/expenseApi";
+import HomePieChart from "@/src/components/Dashboard/PieChart";
 
 export default function HomeScreen() {
   const [fabOpen, setFabOpen] = useState(false);
@@ -30,7 +31,7 @@ export default function HomeScreen() {
       {isFetching ? (
         <SharedSpinner />
       ) : (
-        <>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {/* AVAL BALANCE */}
           <YStack ai="center">
             <Text ff={"$subHead"} ml={10}>
@@ -43,7 +44,7 @@ export default function HomeScreen() {
                 color={COLORS.prime_text}
               />
               <Text ff={"$bold"} fontSize={"$14"}>
-                1987
+                {data.balance}
               </Text>
             </XStack>
           </YStack>
@@ -51,26 +52,28 @@ export default function HomeScreen() {
           <XStack mt={20} jc="space-between" mb={25}>
             <IncomeExpenseCard
               title="Income"
-              amt={98760}
+              amt={data.totInc}
               icon="down"
               mr={10}
               color={COLORS.green1}
             />
             <IncomeExpenseCard
               title="Expense"
-              amt={5000}
+              amt={data.totExp}
               icon="up"
               ml={10}
               color={COLORS.prime_red}
             />
           </XStack>
+          {/* Charts */}
+          <HomePieChart />
           {/* Recent List */}
           <RecentList data={data.data} />
           <SharedFAB
             open={fabOpen}
             onStateChange={(data) => setFabOpen(data)}
           />
-        </>
+        </ScrollView>
       )}
     </YStack>
   );

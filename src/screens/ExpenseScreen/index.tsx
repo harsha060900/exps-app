@@ -28,10 +28,15 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 // redux store
 import { useGetCategoryQuery } from "@/src/store/services/categoryApi";
 import { useGetSubCateQuery } from "@/src/store/services/subCateApi";
-import { useAddExpenseMutation } from "@/src/store/services/expenseApi";
+import {
+  useAddExpenseMutation,
+  useUpdateExpenseMutation
+} from "@/src/store/services/expenseApi";
 import moment from "moment";
 import { expenseState } from "@/src/store/slices/expenseSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { revertAll } from "@/src/store/action";
+import { router } from "expo-router";
 
 export default function ExpenseScreen() {
   const {
@@ -47,23 +52,33 @@ export default function ExpenseScreen() {
       cate_id: "",
       sub_cate_id: null,
       period: "",
-      desc: ""
+      desc: "",
+      type: "expense"
     }
   });
   const [cateId, setCateId] = useState("");
+  const [edit, setEdit] = useState(false);
   const [dateOpen, setDateOpen] = useState(false);
   const [date, setDate] = useState(new Date());
   const { data: cateList, isFetching } = useGetCategoryQuery("");
-  const { data: subCateList, isFetching: loading } = useGetSubCateQuery(
-    cateId,
-    {
-      skip: !cateId
-    }
-  );
+  const { data: subCateList, isFetching: loading } = useGetSubCateQuery(cateId);
   const [addExpense] = useAddExpenseMutation();
-  const expStore = useSelector(expenseState);
+  const [updateExpense] = useUpdateExpenseMutation();
+  const dispatch = useDispatch();
+  const { editExpense: expStore } = useSelector(expenseState);
+  const [expenseId, setExpenseId] = useState(null);
   useEffect(() => {
-    console.log("sstore;", expStore);
+    if (expStore.id) {
+      setEdit(true);
+      setValue("amt", String(expStore.amt));
+      setValue("period", moment(expStore.period).format("yyyy-MM-DD HH:mm:ss"));
+      setValue("cate_id", expStore.cateId);
+      setCateId(expStore.cateId);
+      setValue("sub_cate_id", expStore.subCateId);
+      setValue("desc", expStore.desc);
+      setExpenseId(expStore.id);
+      dispatch(revertAll());
+    }
   }, []);
 
   const renderItem = (item) => {
@@ -90,7 +105,11 @@ export default function ExpenseScreen() {
   const handleFormSubmit = async (value) => {
     let res;
     try {
-      res = await addExpense(value).unwrap();
+      if (!edit) res = await addExpense(value).unwrap();
+      else {
+        res = await updateExpense({ data: value, id: expenseId }).unwrap();
+        router.back();
+      }
       SharedToast(res.message, COLORS.success, COLORS.primary);
     } catch (err) {
       console.log("err:", err.data.message);
@@ -146,9 +165,12 @@ export default function ExpenseScreen() {
                   <View pos={"relative"}>
                     <SharedInput
                       borderColor={
-                        errors.amt ? COLORS.prime_red : COLORS.blur_border
+                        errors.period ? COLORS.prime_red : COLORS.blur_border
                       }
-                      value={moment(value).format("MMM DD YYYY HH:mm")}
+                      value={
+                        value ? moment(value).format("MMM DD YYYY HH:mm") : ""
+                      }
+                      placeholder="Pick a date and time"
                       paddingLeft={35}
                       onPress={() => setDateOpen(true)}
                       // disabled
@@ -164,6 +186,7 @@ export default function ExpenseScreen() {
                       isVisible={dateOpen}
                       mode="datetime"
                       is24Hour={true}
+                      maximumDate={new Date()}
                       onConfirm={handleDateChange}
                       onCancel={() => setDateOpen(false)}
                     />
@@ -238,8 +261,8 @@ export default function ExpenseScreen() {
                   name="sub_cate_id"
                   errors={errors}
                 >
-                  <ScrollView>
-                    <XStack gap={10}>
+                  <ScrollView horizontal={true}>
+                    <XStack gap={10} h={33}>
                       {loading ? (
                         <Spinner size="small" />
                       ) : watch("cate_id") ? (
@@ -336,7 +359,7 @@ export default function ExpenseScreen() {
             />
             <XStack mt={70} jc={"center"} gap={10}>
               <SharedSaveBtn onPress={handleSubmit(handleFormSubmit)}>
-                Add
+                {edit ? "Update" : "Add"}
               </SharedSaveBtn>
             </XStack>
           </ScrollView>

@@ -21,14 +21,22 @@ import {
 //styels
 import { COLORS } from "@/src/constants";
 // redux
-import { useGetExpenseQuery } from "@/src/store/services/expenseApi";
+import {
+  useDeleteExpenseMutation,
+  useGetExpenseQuery
+} from "@/src/store/services/expenseApi";
 import SharedSpinner from "@/src/shared/SharedSpinner";
 import SharedFAB from "@/src/shared/SharedFAB";
 import { useDispatch, useSelector } from "react-redux";
 import { expenseState, setExpenseEdit } from "@/src/store/slices/expenseSlice";
+import { SharedToast } from "@/src/shared/SharedToast";
+import Income from "@/src/components/Income";
 
 export default function TransactionScreen() {
   const [fabOpen, setFabOpen] = useState(false);
+  const [editIncomeOpen, setEditIncomeOpen] = useState(false);
+  const [editData, setEditData] = useState({});
+
   const [searchParams, setSearchParams] = useState({
     orderBy: "desc",
     start: "",
@@ -40,23 +48,38 @@ export default function TransactionScreen() {
     end: ""
   });
   const { data, isFetching } = useGetExpenseQuery(searchParams);
+  const [deleteExpense] = useDeleteExpenseMutation();
   const dispatch = useDispatch();
   const expStore = useSelector(expenseState);
+  async function handleDelExp(id: number) {
+    try {
+      const res = await deleteExpense(id);
+      SharedToast(res?.data?.message, COLORS.success, COLORS.primary);
+    } catch (err) {
+      console.log("err:", err);
+      // SharedToast(err, COLORS.error)
+    }
+  }
 
   function Action(item) {
     return (
       <XStack gap={8}>
         <View
           onPress={() => {
-            dispatch(setExpenseEdit(item));
-            router.push("/expense");
+            if (item.item.type === "income") {
+              setEditData(item.item);
+              setEditIncomeOpen(true);
+            } else {
+              dispatch(setExpenseEdit(item));
+              router.push("/expense");
+            }
           }}
         >
           <MaterialCommunityIcons name="pencil" size={20} color={COLORS.warn} />
         </View>
         <Separator borderRightColor={COLORS.blur_border} vertical />
 
-        <View>
+        <View onPress={() => handleDelExp(item.item.id)}>
           <FontAwesome name="trash" size={20} color={COLORS.prime_red} />
         </View>
       </XStack>
@@ -84,7 +107,6 @@ export default function TransactionScreen() {
     // });
     setDateOpen({ isOpen: false, name: "" });
   };
-  console.log("aa:", finalDate.start);
 
   return (
     <>
@@ -225,7 +247,7 @@ export default function TransactionScreen() {
                       key={ind}
                       mb={15}
                     >
-                      <YStack gap={5}>
+                      <YStack gap={5} jc="center">
                         <XStack ai="center">
                           <MaterialCommunityIcons
                             name="currency-inr"
@@ -238,21 +260,33 @@ export default function TransactionScreen() {
                         </XStack>
                         {/* cate and sub cate */}
                         <XStack ai={"center"} ml={18}>
-                          <Text
-                            textTransform="capitalize"
-                            color={COLORS.neutral_text}
-                            fontFamily={"$medium"}
-                            fontSize={"$2"}
-                          >
-                            {ele.cateName}
-                          </Text>
-                          {ele.subCateName && (
+                          {ele.cateName ? (
+                            <>
+                              <Text
+                                textTransform="capitalize"
+                                color={COLORS.neutral_text}
+                                fontFamily={"$medium"}
+                                fontSize={"$2"}
+                              >
+                                {ele.cateName}
+                              </Text>
+                              {ele.subCateName && (
+                                <Text
+                                  textTransform="capitalize"
+                                  color={COLORS.neutral_text}
+                                  fontSize={"$2"}
+                                >
+                                  {" -->"} {ele.subCateName}
+                                </Text>
+                              )}
+                            </>
+                          ) : (
                             <Text
                               textTransform="capitalize"
                               color={COLORS.neutral_text}
                               fontSize={"$2"}
                             >
-                              {" -->"} {ele.subCateName}
+                              {ele.type}
                             </Text>
                           )}
                         </XStack>
@@ -260,13 +294,19 @@ export default function TransactionScreen() {
 
                       <YStack ai="flex-end" gap={8}>
                         <Text ml={4} fontSize={"$3"}>
-                          {moment(ele.created).format("MMMM DD")}
+                          {moment(ele.period).format("MMMM DD")}
                         </Text>
                         <Action item={ele} />
                       </YStack>
                     </XStack>
                   ))}
                 </ScrollView>
+                <Income
+                  isOpen={editIncomeOpen}
+                  setIsOpen={(data) => setEditIncomeOpen(data)}
+                  editData={editData}
+                  setEditData={(data) => {}}
+                />
               </>
             )}
           </>

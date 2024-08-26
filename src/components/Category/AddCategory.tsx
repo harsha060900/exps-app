@@ -1,7 +1,6 @@
 // package
 import React, { useEffect, useState } from "react";
 import { XStack, Dialog } from "tamagui";
-import { Keyboard, TouchableWithoutFeedback } from "react-native";
 // form
 import { useForm, Controller } from "react-hook-form";
 // icons

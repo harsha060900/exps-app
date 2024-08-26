@@ -45,7 +45,11 @@ export default function RecentList({ data }) {
                 <View
                   position="relative"
                   mr={3}
-                  bg={"#dc4c6435"}
+                  bg={
+                    ele.type === "income"
+                      ? COLORS.primary_lite
+                      : COLORS.error_lite
+                  }
                   px={10}
                   py={5}
                   borderRadius={15}
@@ -54,13 +58,21 @@ export default function RecentList({ data }) {
                     name="money-bill-alt"
                     style={{ marginTop: 11 }}
                     size={24}
-                    color={COLORS.prime_red}
+                    color={
+                      ele.type === "income" ? COLORS.primary : COLORS.prime_red
+                    }
                   />
                   <Feather
                     style={{ position: "absolute", top: 0, left: 14 }}
-                    name={`trending-up` as keyof object}
+                    name={
+                      `trending-${
+                        ele.type === "income" ? "down" : "up"
+                      }` as keyof object
+                    }
                     size={21}
-                    color={COLORS.prime_red}
+                    color={
+                      ele.type === "income" ? COLORS.primary : COLORS.prime_red
+                    }
                   />
                 </View>
 
@@ -76,24 +88,26 @@ export default function RecentList({ data }) {
                 </XStack>
               </XStack>
 
-              <YStack ai="flex-end">
+              <YStack ai="flex-end" jc="center">
                 <Text ml={4} fontSize={"$3"}>
                   {moment(ele.period).format("MMMM DD")}
                 </Text>
-                <XStack ai={"center"}>
-                  <Text
-                    color={COLORS.neutral_text}
-                    fontFamily={"$medium"}
-                    fontSize={"$2"}
-                  >
-                    {ele.cateName}
-                  </Text>
-                  {ele.subCateName && (
-                    <Text color={COLORS.neutral_text} fontSize={"$2"}>
-                      {" -->"} {ele.subCateName}
+                {ele.cateName && (
+                  <XStack ai={"center"}>
+                    <Text
+                      color={COLORS.neutral_text}
+                      fontFamily={"$medium"}
+                      fontSize={"$2"}
+                    >
+                      {ele.cateName}
                     </Text>
-                  )}
-                </XStack>
+                    {ele.subCateName && (
+                      <Text color={COLORS.neutral_text} fontSize={"$2"}>
+                        {" -->"} {ele.subCateName}
+                      </Text>
+                    )}
+                  </XStack>
+                )}
               </YStack>
             </XStack>
           )
