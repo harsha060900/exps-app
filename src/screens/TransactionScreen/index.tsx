@@ -190,9 +190,14 @@ export default function TransactionScreen() {
               <Button
                 size="$3"
                 px={5}
-                bg={COLORS.primary}
+                bg={
+                  !finalDate.start || !finalDate.end
+                    ? COLORS.blur_border
+                    : COLORS.primary
+                }
                 ml={12}
                 // w={50}
+                disabled={!finalDate.start || !finalDate.end}
                 onPress={() =>
                   setSearchParams({
                     ...searchParams,
