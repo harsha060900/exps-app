@@ -35,7 +35,7 @@ import {
 import moment from "moment";
 import { expenseState } from "@/src/store/slices/expenseSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { revertAll } from "@/src/store/action";
+import { revertAll } from "@/src/store/actions";
 import { router } from "expo-router";
 
 export default function ExpenseScreen() {

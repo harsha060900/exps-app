@@ -44,7 +44,7 @@ export default function HomeScreen() {
                 color={COLORS.prime_text}
               />
               <Text ff={"$bold"} fontSize={"$14"}>
-                {data.balance}
+                {data?.balance}
               </Text>
             </XStack>
           </YStack>
