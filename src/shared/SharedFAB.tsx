@@ -39,7 +39,11 @@ export default function SharedFAB({ open, onStateChange }: FABProps) {
               icon: "currency-inr",
               label: "Income",
               color: COLORS.prime_text,
-              style: { backgroundColor: COLORS.primary, borderRadius: 50 },
+              style: {
+                backgroundColor: COLORS.primary,
+                borderRadius: 50
+              },
+              labelTextColor: COLORS.prime_text,
               onPress: () => setDialogOpen(true)
             },
             {
@@ -47,6 +51,7 @@ export default function SharedFAB({ open, onStateChange }: FABProps) {
               label: "Expense",
               color: COLORS.prime_text,
               style: { backgroundColor: COLORS.primary, borderRadius: 50 },
+              labelTextColor: COLORS.prime_text,
               onPress: () => router.push("/expense")
             },
             // {
@@ -73,8 +78,9 @@ export default function SharedFAB({ open, onStateChange }: FABProps) {
                 />
               ),
               label: "Category",
-              color: COLORS.prime_text,
+              color: COLORS.icon,
               style: { backgroundColor: COLORS.primary, borderRadius: 50 },
+              labelTextColor: COLORS.prime_text,
               onPress: () => router.push("/category")
             }
           ]}

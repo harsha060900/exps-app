@@ -52,14 +52,14 @@ export default function HomeScreen() {
           <XStack mt={20} jc="space-between" mb={25}>
             <IncomeExpenseCard
               title="Income"
-              amt={data.totInc}
+              amt={data?.totInc}
               icon="down"
               mr={10}
               color={COLORS.green1}
             />
             <IncomeExpenseCard
               title="Expense"
-              amt={data.totExp}
+              amt={data?.totExp}
               icon="up"
               ml={10}
               color={COLORS.prime_red}

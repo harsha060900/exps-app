@@ -1,93 +1,90 @@
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
-import { Stack, Text, View } from "tamagui";
+import { StyleSheet, Dimensions } from "react-native";
+import { Stack, Text, View, XStack } from "tamagui";
 import {
   VictoryPie,
   VictoryLabel,
   VictoryLegend,
   VictoryContainer
 } from "victory-native";
+import Entypo from "@expo/vector-icons/Entypo";
 
 export default function App() {
+  const { width, height } = Dimensions.get("window");
   const data = [
     { x: "A", y: 50, label: "Slice A" },
-    { x: "B", y: 30, label: "Slice B" }
-    // { x: "C", y: 20, label: "Slice C" },
-    // { x: "D", y: 10, label: "Slice D" }
+    { x: "B", y: 30, label: "Slice B" },
+    { x: "C", y: 20, label: "Slice C" },
+    { x: "D", y: 10, label: "Slice D" },
+    { x: "E", y: 5, label: "Slice E" },
+    { x: "F", y: 12, label: "Slice F" },
+    { x: "G", y: 22, label: "Slice G" }
   ];
   const [selectedSlice, setSelectedSlice] = useState(null);
 
-  const handleSlicePress = (event, data) => {
+  const handleSlicePress = (event: any, data: any) => {
     setSelectedSlice(data.x);
   };
+  const dataCount: number = data.length;
 
   const colors = ["limegreen", "gold", "cyan", "pink"];
   return (
-    <View style={styles.container}>
-      {/* <Stack> */}
-      <VictoryPie
-        data={data}
-        colorScale={["limegreen", "gold", "cyan", "pink"]}
-        events={[
-          {
-            target: "data",
-            eventHandlers: {
-              onPress: (event, props) => {
-                const { datum } = props;
-                handleSlicePress(event, datum);
-                return [];
+    <>
+      <View style={styles.container}>
+        <VictoryPie
+          data={data}
+          colorScale={["limegreen", "gold", "cyan", "pink"]}
+          events={[
+            {
+              target: "data",
+              eventHandlers: {
+                onPress: (event, props) => {
+                  const { datum } = props;
+                  handleSlicePress(event, datum);
+                  return [];
+                }
               }
             }
-          }
-        ]}
-        height={320} // Adjust height to fit the chart
-        padding={{ top: 15, bottom: 15 }}
-        style={{
-          data: {
-            fill: ({ datum }) =>
-              datum.x === selectedSlice ? "orange" : "blue",
-            strokeWidth: ({ datum }) => (datum.x === selectedSlice ? 4 : 1),
-            stroke: "white"
-            // Apply scaling effect through the radius
-            // Scale the selected slice
-          },
-          labels: { display: "none" },
-          parent: {
-            // backgroundColor: "red"
-          }
-        }}
-        animate={{
-          duration: 200,
-          onLoad: { duration: 500 },
-          easing: "bounce"
-        }}
-        innerRadius={100} // Optional: Add inner radius for a donut effect
-      />
-      <VictoryLegend
-        x={50}
-        // y={50}
-        height={50}
-        // padding={{ top: 10, bottom: 10 }}
-        orientation="horizontal"
-        gutter={20}
-        style={{
-          labels: { fontSize: 14, fill: "#fff" },
-          parent: {
-            backgroundColor: "limegreen"
-          }
-        }}
-        colorScale={colors}
-        data={data.map((x) => ({ name: x.label }))}
-      />
-      {/* </Stack> */}
-    </View>
+          ]}
+          height={250} // Adjust height to fit the chart
+          padding={{ top: 15, bottom: 15 }}
+          style={{
+            data: {
+              fill: ({ datum }) =>
+                datum.x === selectedSlice ? "orange" : "blue",
+              strokeWidth: ({ datum }) => (datum.x === selectedSlice ? 4 : 1),
+              stroke: "white"
+            },
+            labels: { display: "none" },
+            parent: {
+              // backgroundColor: "red"
+            }
+          }}
+          animate={{
+            duration: 200,
+            onLoad: { duration: 500 },
+            easing: "bounce"
+          }}
+          innerRadius={75}
+        />
+      </View>
+      {/* chart legend */}
+      <XStack>
+        {data.map((ele, ind) => (
+          <XStack key={ind}>
+            <Entypo name="dot-single" size={24} color="black" />
+            <Text>{ele.label}</Text>
+          </XStack>
+        ))}
+      </XStack>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "center"
     // backgroundColor: "#f5fcff"
   }
