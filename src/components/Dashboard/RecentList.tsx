@@ -13,7 +13,7 @@ import { router } from "expo-router";
 
 export default function RecentList({ data }) {
   return (
-    <YStack>
+    <YStack mt={20}>
       <XStack jc={"space-between"} ai={"center"}>
         <Text fontSize={"$5"} fontFamily={"$medium"} mb={8}>
           Recent Transactions

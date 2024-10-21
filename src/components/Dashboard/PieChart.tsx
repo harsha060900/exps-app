@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Dimensions } from "react-native";
-import { Stack, Text, View, XStack } from "tamagui";
+import { ScrollView, Stack, Text, View, XStack } from "tamagui";
 import {
   VictoryPie,
   VictoryLabel,
@@ -69,14 +69,17 @@ export default function App() {
         />
       </View>
       {/* chart legend */}
-      <XStack>
+      {/* <ScrollView horizontal> */}
+        <Stack mx={'auto'} flexWrap="wrap" jc={'center'} flexDirection="row">
         {data.map((ele, ind) => (
-          <XStack key={ind}>
-            <Entypo name="dot-single" size={24} color="black" />
+          <XStack key={ind} ai={"center"} >
+            <Entypo name="dot-single" size={24} color="white" />
             <Text>{ele.label}</Text>
           </XStack>
         ))}
-      </XStack>
+        </Stack>
+        {/* </ScrollView> */}
+      
     </>
   );
 }
