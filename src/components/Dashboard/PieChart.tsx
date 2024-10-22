@@ -13,11 +13,16 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { useGetPieChartQuery } from "@/src/store/services/chartApi";
 import SharedSpinner from "@/src/shared/SharedSpinner";
 
+import moment from "moment";
+import { COLORS } from "@/src/constants";
+
 export default function App() {
   const [searchParams, setSearchParams] = useState({
     filterBy: "",
-    start: "2024-05-01",
-    end: "2024-05-30"
+    // start:'2024-05-01',
+    // end:'2024-05-30'
+    start: moment().startOf("month").format("YYYY-MM-DD"),
+    end: moment().endOf("month").format("YYYY-MM-DD")
   });
   const { data, isFetching } = useGetPieChartQuery(searchParams);
 
@@ -33,30 +38,45 @@ export default function App() {
   // ];
   const [selectedSlice, setSelectedSlice] = useState(null);
 
-  const handleSlicePress = (event: any, data: any) => {
+  const handleSlicePress = (data: any) => {
+    if (selectedSlice === data.cateName) {
+      setSelectedSlice(null);
+      return;
+    }
     setSelectedSlice(data.cateName);
   };
 
   const colors = ["limegreen", "gold", "cyan", "pink"];
   return (
     <>
+      <XStack jc={"space-between"} ai={"center"}>
+        <Text  fontSize={"$5"} fontFamily={"$medium"} mb={8}>This Month</Text>
+        <View onPress={() => {}}>
+          <Text
+            color={COLORS.primary}
+            fontFamily={"$medium"}
+            textDecorationLine="underline"
+          >
+            Show all
+          </Text>
+        </View>
+      </XStack>
       {isFetching ? (
         <SharedSpinner />
-      ) : (
+      ) : data.length > 0 ? (
         <>
-          <View style={styles.container}>
+          <View style={styles.container} pos={"relative"}>
             <VictoryPie
               data={data}
               x="cateName"
               y="expense"
-              // colorScale={["limegreen", "gold", "cyan", "pink"]}
               events={[
                 {
                   target: "data",
                   eventHandlers: {
                     onPress: (event, props) => {
                       const { datum } = props;
-                      handleSlicePress(event, datum);
+                      handleSlicePress(datum);
                       return [];
                     }
                   }
@@ -68,7 +88,7 @@ export default function App() {
                 data: {
                   fill: ({ datum }) => datum.bgColor,
                   strokeWidth: ({ datum }) =>
-                    datum.cateName === selectedSlice ? 5 : 0,
+                    datum.cateName === selectedSlice ? 3 : 0,
                   stroke: ({ datum }) => datum.bgColor
                 },
                 labels: { display: "none" },
@@ -85,10 +105,14 @@ export default function App() {
             />
           </View>
           {/* chart legend */}
-          {/* <ScrollView horizontal> */}
           <Stack mx={"auto"} flexWrap="wrap" jc={"center"} flexDirection="row">
             {data.map((ele, ind) => (
-              <XStack key={ind} ai={"center"} mr={15}>
+              <XStack
+                key={ind}
+                ai={"center"}
+                mr={15}
+                onPress={() => handleSlicePress(ele)}
+              >
                 <View
                   bg={ele.bgColor}
                   mr={4}
@@ -101,7 +125,12 @@ export default function App() {
               </XStack>
             ))}
           </Stack>
-          {/* </ScrollView> */}
+        </>
+      ) : (
+        <>
+        <Stack h={250} jc='center' ai='center'>
+          <Text fontSize={"$4"} color={COLORS.neutral_text}>No Transactions made</Text>
+        </Stack>
         </>
       )}
     </>
