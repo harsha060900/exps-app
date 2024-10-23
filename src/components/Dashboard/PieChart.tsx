@@ -15,6 +15,10 @@ import SharedSpinner from "@/src/shared/SharedSpinner";
 
 import moment from "moment";
 import { COLORS } from "@/src/constants";
+// icons
+import {
+  MaterialCommunityIcons
+} from "@expo/vector-icons";
 
 export default function App() {
   const [searchParams, setSearchParams] = useState({
@@ -84,7 +88,17 @@ export default function App() {
               >
                 {selectedSlice.name}
               </Text>
-              <Text fontSize={"$3"}>{selectedSlice.exp}</Text>
+              <XStack ai='center'>
+                {
+                  selectedSlice.id &&
+              <MaterialCommunityIcons
+              name="currency-inr"
+              size={15}
+              color={COLORS.prime_text}
+              />
+            }
+              <Text color={COLORS.prime_text} fontSize={"$3"}>{selectedSlice.exp}</Text>
+              </XStack>
             </YStack>
             <VictoryPie
               data={data}

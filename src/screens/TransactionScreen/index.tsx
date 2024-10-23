@@ -201,8 +201,8 @@ export default function TransactionScreen() {
                 onPress={() =>
                   setSearchParams({
                     ...searchParams,
-                    start: finalDate.start + " 00:00:00",
-                    end: finalDate.end + " 23:59:59"
+                    start: finalDate.start,
+                    end: finalDate.end 
                   })
                 }
               >
