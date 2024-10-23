@@ -18,7 +18,7 @@ export const expenseApi = api.injectEndpoints({
           body: data
         };
       },
-      invalidatesTags: ["Expense"]
+      invalidatesTags: ["Expense", "PieChart"]
     }),
     updateExpense: builder.mutation({
       query: ({ data, id }) => {
@@ -28,7 +28,7 @@ export const expenseApi = api.injectEndpoints({
           body: data
         };
       },
-      invalidatesTags: ["Expense"]
+      invalidatesTags: ["Expense", "PieChart"]
     }),
     deleteExpense: builder.mutation({
       query: (id) => {
@@ -37,7 +37,7 @@ export const expenseApi = api.injectEndpoints({
           method: "DELETE"
         };
       },
-      invalidatesTags: ["Expense"]
+      invalidatesTags: ["Expense", "PieChart"]
     })
   }),
   overrideExisting: true

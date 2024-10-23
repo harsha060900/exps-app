@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Dimensions } from "react-native";
-import { ScrollView, Stack, Text, View, XStack } from "tamagui";
+import { ScrollView, Stack, Text, View, XStack, YStack } from "tamagui";
 import {
   VictoryPie,
   VictoryLabel,
@@ -36,21 +36,31 @@ export default function App() {
   //   { x: "F", y: 12, label: "Slice F" },
   //   { x: "G", y: 22, label: "Slice G" }
   // ];
-  const [selectedSlice, setSelectedSlice] = useState(null);
+  const [selectedSlice, setSelectedSlice] = useState({
+    id: null,
+    name: "",
+    exp: null
+  });
 
   const handleSlicePress = (data: any) => {
-    if (selectedSlice === data.cateName) {
-      setSelectedSlice(null);
+    if (selectedSlice.id === data.cateId) {
+      setSelectedSlice({ id: null, name: "", exp: null });
       return;
     }
-    setSelectedSlice(data.cateName);
+    setSelectedSlice({
+      id: data.cateId,
+      name: data.cateName,
+      exp: data.expense
+    });
   };
 
   const colors = ["limegreen", "gold", "cyan", "pink"];
   return (
     <>
       <XStack jc={"space-between"} ai={"center"}>
-        <Text  fontSize={"$5"} fontFamily={"$medium"} mb={8}>This Month</Text>
+        <Text fontSize={"$5"} fontFamily={"$medium"} mb={8}>
+          This Month
+        </Text>
         <View onPress={() => {}}>
           <Text
             color={COLORS.primary}
@@ -65,10 +75,20 @@ export default function App() {
         <SharedSpinner />
       ) : data.length > 0 ? (
         <>
-          <View style={styles.container} pos={"relative"}>
+          <View style={styles.container} jc="center" pos={"relative"}>
+            <YStack pos={"absolute"} ai="center">
+              <Text
+                textTransform="capitalize"
+                fontSize={"$4"}
+                fontFamily={"$subHead"}
+              >
+                {selectedSlice.name}
+              </Text>
+              <Text fontSize={"$3"}>{selectedSlice.exp}</Text>
+            </YStack>
             <VictoryPie
               data={data}
-              x="cateName"
+              x="cateId"
               y="expense"
               events={[
                 {
@@ -88,7 +108,7 @@ export default function App() {
                 data: {
                   fill: ({ datum }) => datum.bgColor,
                   strokeWidth: ({ datum }) =>
-                    datum.cateName === selectedSlice ? 3 : 0,
+                    datum.cateId === selectedSlice.id ? 3 : 0,
                   stroke: ({ datum }) => datum.bgColor
                 },
                 labels: { display: "none" },
@@ -128,9 +148,11 @@ export default function App() {
         </>
       ) : (
         <>
-        <Stack h={250} jc='center' ai='center'>
-          <Text fontSize={"$4"} color={COLORS.neutral_text}>No Transactions made</Text>
-        </Stack>
+          <Stack h={250} jc="center" ai="center">
+            <Text fontSize={"$4"} color={COLORS.neutral_text}>
+              No Transactions made
+            </Text>
+          </Stack>
         </>
       )}
     </>

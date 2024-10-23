@@ -7,7 +7,8 @@ export const chartApi = api.injectEndpoints({
         return {
           url: `pie-chart?filterBy=${param.filterBy}&start=${param.start}&end=${param.end}`
         };
-      }
+      },
+      providesTags: ["PieChart"]
     })
   }),
   overrideExisting: true
