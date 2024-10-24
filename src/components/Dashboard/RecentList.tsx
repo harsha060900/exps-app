@@ -90,7 +90,7 @@ export default function RecentList({ data }) {
 
               <YStack ai="flex-end" jc="center">
                 <Text ml={4} fontSize={"$3"}>
-                  {moment(ele.period).format("MMMM DD")}
+                  {moment(ele.period).format("DD MMM YY")}
                 </Text>
                 {ele.cateName && (
                   <XStack ai={"center"}>

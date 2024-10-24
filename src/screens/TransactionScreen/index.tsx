@@ -201,8 +201,8 @@ export default function TransactionScreen() {
                 onPress={() =>
                   setSearchParams({
                     ...searchParams,
-                    start: finalDate.start,
-                    end: finalDate.end 
+                    start: finalDate.start + " 00:00:00",
+                    end: finalDate.end + " 23:59:59"
                   })
                 }
               >
@@ -299,7 +299,7 @@ export default function TransactionScreen() {
 
                       <YStack ai="flex-end" gap={8}>
                         <Text ml={4} fontSize={"$3"}>
-                          {moment(ele.period).format("MMMM DD")}
+                          {moment(ele.period).format("DD MMM YY")}
                         </Text>
                         <Action item={ele} />
                       </YStack>
