@@ -6,22 +6,24 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { COLORS } from "@/src/constants";
 
 type FABProps = {
-    setIsOpen: (value: boolean) => void;
-  };
+  setIsOpen: (value: boolean) => void;
+};
 
-export default function Fab({ setIsOpen }:FABProps) {
+export default function Fab({ setIsOpen }: FABProps) {
   return (
     // <Portal>
     <FAB.Group
-      open={false}
+      open={true}
       visible
       icon="plus"
       backdropColor="#000000a1"
-      style={{
-        // paddingBottom: 30,
-      }}
+      style={
+        {
+          // paddingBottom: 30,
+        }
+      }
       fabStyle={{
-        backgroundColor: COLORS.primary,
+        backgroundColor: COLORS.primary
         // borderRadius: 50,
       }}
       color={"#fff"}

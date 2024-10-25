@@ -15,7 +15,7 @@ import RecentList from "@/src/components/Dashboard/RecentList";
 import SharedSpinner from "@/src/shared/SharedSpinner";
 // redux
 import { useGetExpenseQuery } from "@/src/store/services/expenseApi";
-import HomePieChart from "@/src/components/Dashboard/PieChart";
+import SpendingChart from "@/src/components/Dashboard/SpendingChart";
 
 export default function HomeScreen() {
   const [fabOpen, setFabOpen] = useState(false);
@@ -49,7 +49,7 @@ export default function HomeScreen() {
             </XStack>
           </YStack>
           {/* INCOME EXPENSE CARD */}
-          <XStack mt={20} jc="space-between" mb={25}>
+          <XStack mt={10} jc="space-between" mb={20}>
             <IncomeExpenseCard
               title="Income"
               amt={data?.totInc}
@@ -66,7 +66,7 @@ export default function HomeScreen() {
             />
           </XStack>
           {/* Charts */}
-          <HomePieChart />
+          <SpendingChart />
           {/* Recent List */}
           <RecentList data={data.data} />
           <SharedFAB

@@ -254,12 +254,36 @@ export default function TransactionScreen() {
                     >
                       <YStack gap={5} jc="center">
                         <XStack ai="center">
-                          <MaterialCommunityIcons
-                            name="currency-inr"
-                            size={15}
-                            color={COLORS.icon}
-                          />
-                          <Text ml={2} fontFamily={"$medium"} fontSize={"$4"}>
+                          <Text
+                            fontFamily={"$medium"}
+                            fontSize={"$2"}
+                            color={
+                              ele.type === "income"
+                                ? COLORS.primary
+                                : COLORS.prime_red
+                            }
+                          >
+                            {ele.type === "income" ? "+" : "-"}
+                          </Text>
+                          <Text
+                            fontFamily={"$medium"}
+                            fontSize={"$4"}
+                            color={
+                              ele.type === "income"
+                                ? COLORS.primary
+                                : COLORS.prime_red
+                            }
+                          >
+                            <MaterialCommunityIcons
+                              name="currency-inr"
+                              size={16}
+                              // color={COLORS.icon}
+                              color={
+                                ele.type === "income"
+                                  ? COLORS.primary
+                                  : COLORS.prime_red
+                              }
+                            />
                             {ele.amt}
                           </Text>
                         </XStack>

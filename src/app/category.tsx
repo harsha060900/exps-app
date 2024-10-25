@@ -1,14 +1,12 @@
 // Package
 import { Stack, router } from "expo-router";
-import React, { useEffect, useState } from "react";
-import { Text, XStack } from "tamagui";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React, { useState } from "react";
+import { XStack } from "tamagui";
 // Icons
 import { Ionicons } from "@expo/vector-icons";
 // style
 import { COLORS } from "@/src/constants";
 // Components and Screens
-import HomeScreen from "@/src/screens/HomeScreen";
 import CategoryScreen from "../screens/CategoryScreen";
 import AddCategory from "../components/Category/AddCategory";
 

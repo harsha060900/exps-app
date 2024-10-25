@@ -42,7 +42,7 @@ export default function RecentList({ data }) {
               jc={"space-between"}
             >
               <XStack gap={6}>
-                <View
+                {/* <View
                   position="relative"
                   mr={3}
                   bg={
@@ -74,15 +74,35 @@ export default function RecentList({ data }) {
                       ele.type === "income" ? COLORS.primary : COLORS.prime_red
                     }
                   />
-                </View>
+                </View> */}
 
                 <XStack ai="center">
-                  <MaterialCommunityIcons
-                    name="currency-inr"
-                    size={15}
-                    color={COLORS.icon}
-                  />
-                  <Text ml={2} fontFamily={"$medium"} fontSize={"$4"}>
+                  <Text
+                    fontFamily={"$medium"}
+                    fontSize={"$2"}
+                    color={
+                      ele.type === "income" ? COLORS.primary : COLORS.prime_red
+                    }
+                  >
+                    {ele.type === "income" ? "+" : "-"}
+                  </Text>
+                  <Text
+                    fontFamily={"$medium"}
+                    fontSize={"$4"}
+                    color={
+                      ele.type === "income" ? COLORS.primary : COLORS.prime_red
+                    }
+                  >
+                    <MaterialCommunityIcons
+                      name="currency-inr"
+                      size={16}
+                      // color={COLORS.icon}
+                      color={
+                        ele.type === "income"
+                          ? COLORS.primary
+                          : COLORS.prime_red
+                      }
+                    />
                     {ele.amt}
                   </Text>
                 </XStack>
