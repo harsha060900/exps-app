@@ -5,7 +5,7 @@ export const chartApi = api.injectEndpoints({
     getPieChart: builder.query({
       query: (param) => {
         return {
-          url: `pie-chart?filterBy=${param.filterBy}&start=${param.start}&end=${param.end}`
+          url: `pie-chart?filterBy=${param.filterBy}&start=${param.start}+" 00:00:00"&end=${param.end}+" 23:59:59"`
         };
       },
       providesTags: ["PieChart"]

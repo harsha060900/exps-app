@@ -2,16 +2,12 @@ import React, { useEffect, useState } from "react";
 import { XStack, Text, YStack, Stack, View, Button } from "tamagui";
 import moment from "moment";
 // icons
-import {
-  MaterialCommunityIcons,
-  Feather,
-  FontAwesome5
-} from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 //styles
 import { COLORS } from "@/src/constants";
 import { router } from "expo-router";
 
-export default function RecentList({ data }) {
+export default function RecentList({ data }) {  
   return (
     <YStack mt={20}>
       <XStack jc={"space-between"} ai={"center"}>

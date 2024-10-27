@@ -30,7 +30,6 @@ export default function SpendingChart() {
   //   { x: "F", y: 12, label: "Slice F" },
   //   { x: "G", y: 22, label: "Slice G" }
   // ];
-
   return (
     <>
       <Text fontSize={"$7"} fontFamily={"$heading"} mb={2}>
@@ -50,7 +49,7 @@ export default function SpendingChart() {
           </Text>
         </View>
       </XStack>
-      {isFetching ? <SharedSpinner /> : <PieChart data={data} filter={false} />}
+      {isFetching ? <SharedSpinner /> : <PieChart data={data} />}
     </>
   );
 }
