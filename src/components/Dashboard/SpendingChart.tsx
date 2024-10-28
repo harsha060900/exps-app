@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { ScrollView, Stack, Text, View, XStack, YStack } from "tamagui";
+import { router } from "expo-router";
 // redux
 import { useGetPieChartQuery } from "@/src/store/services/chartApi";
 
@@ -39,7 +40,7 @@ export default function SpendingChart() {
         <Text fontSize={"$5"} fontFamily={"$medium"} mb={8}>
           This Month
         </Text>
-        <View onPress={() => {}}>
+        <View onPress={() => router.push("/graph")}>
           <Text
             color={COLORS.primary}
             fontFamily={"$medium"}

@@ -24,7 +24,8 @@ export default function Spending() {
     useGetPieChartQuery(searchParams);
   const { data: cateData, isFetching } = useGetCategoryQuery("");
   const [isDateOpen, setDateOpen] = useState(false);
-  const [timeValue, setTimeValue] = useState({
+  const [dateValue, setDateValue] = useState({ start: "", end: "" });
+  const [periodValue, setPeriodValue] = useState({
     label: "This Month",
     value: "month"
   });
@@ -47,7 +48,7 @@ export default function Spending() {
   }, [cateData]);
 
   useEffect(() => {
-    if (timeValue.value === "custom")
+    if (periodValue.value === "custom")
       setTimeFilter([
         { label: "Today", value: "today" },
         { label: "This Week", value: "week" },
@@ -73,7 +74,7 @@ export default function Spending() {
         start: moment().startOf("day").format("YYYY-MM-DD"),
         end: moment().format("YYYY-MM-DD")
       });
-      setTimeValue(item);
+      setPeriodValue(item);
       return;
     } else if (item.value === "week") {
       setSearchParams({
@@ -81,7 +82,7 @@ export default function Spending() {
         start: moment().startOf("week").format("YYYY-MM-DD"),
         end: moment().format("YYYY-MM-DD")
       });
-      setTimeValue(item);
+      setPeriodValue(item);
       return;
     } else if (item.value === "month") {
       setSearchParams({
@@ -89,24 +90,25 @@ export default function Spending() {
         start: moment().startOf("month").format("YYYY-MM-DD"),
         end: moment().format("YYYY-MM-DD")
       });
-      setTimeValue(item);
+      setPeriodValue(item);
       return;
     } else {
       setDateOpen(!isDateOpen);
-      setTimeValue(item);
+      setPeriodValue(item);
       return;
     }
   };
 
   const handleCustomDate = (day) => {
     if (
-      day < searchParams.start ||
-      !searchParams.start ||
-      (searchParams.start && searchParams.end)
+      day < dateValue.start ||
+      !dateValue.start ||
+      (dateValue.start && dateValue.end)
     ) {
-      setSearchParams({ ...searchParams, start: day, end: "" });
+      setDateValue({ start: day, end: "" });
     } else {
-      setSearchParams({ ...searchParams, end: day });
+      setDateValue({...dateValue, end:day})
+      setSearchParams({ ...searchParams,start:dateValue.start, end: day });
       setDateOpen(false);
     }
   };
@@ -161,7 +163,7 @@ export default function Spending() {
                 handleTimeFilter(item);
               }}
               data={timeFilter}
-              value={timeValue}
+              value={periodValue}
               // renderLeftIcon={() => (
               //   <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
               // )}
@@ -215,10 +217,9 @@ export default function Spending() {
       >
         <SharedDatePicker
           mode="date"
-          fromDate={searchParams.start}
-          toDate={searchParams.end}
+          fromDate={dateValue.start}
+          toDate={dateValue.end}
           onChange={handleCustomDate}
-          onClose={() => setDateOpen(false)}
         />
       </SharedDialog>
     </>
