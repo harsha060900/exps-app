@@ -13,6 +13,7 @@ import SharedDatePicker from "@/src/shared/SharedDatePicker";
 import SharedDialog from "@/src/shared/SharedDialog";
 import SharedSpinner from "@/src/shared/SharedSpinner";
 import PieChart from "@/src/shared/charts/PieChart";
+import SharedDropdown from "@/src/shared/SharedDropdown";
 
 export default function Spending() {
   const [searchParams, setSearchParams] = useState({
@@ -107,8 +108,8 @@ export default function Spending() {
     ) {
       setDateValue({ start: day, end: "" });
     } else {
-      setDateValue({...dateValue, end:day})
-      setSearchParams({ ...searchParams,start:dateValue.start, end: day });
+      setDateValue({ ...dateValue, end: day });
+      setSearchParams({ ...searchParams, start: dateValue.start, end: day });
       setDateOpen(false);
     }
   };
@@ -136,7 +137,7 @@ export default function Spending() {
       ) : (
         <View>
           <XStack gap={20}>
-            <Dropdown
+            {/* <Dropdown
               style={[
                 styles.dropdown,
                 {
@@ -147,14 +148,12 @@ export default function Spending() {
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
               inputSearchStyle={styles.inputSearchStyle}
-              // iconStyle={styles.iconStyle}
               itemContainerStyle={{ backgroundColor: COLORS.bg }}
               itemTextStyle={{ fontSize: 16 }}
               containerStyle={styles.containerStyle}
               backgroundColor="#00000099"
               activeColor="#ffffff15"
               search={false}
-              // mode="modal"
               maxHeight={400}
               labelField="label"
               valueField="value"
@@ -164,44 +163,20 @@ export default function Spending() {
               }}
               data={timeFilter}
               value={periodValue}
-              // renderLeftIcon={() => (
-              //   <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
-              // )}
+            /> */}
+            <SharedDropdown
+              data={timeFilter}
+              value={periodValue}
+              onChange={handleTimeFilter}
             />
-
             {/* Category dropdown */}
-            <Dropdown
-              style={[
-                styles.dropdown,
-                {
-                  borderColor: COLORS.blur_border,
-                  flex: 1
-                }
-              ]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              // iconStyle={styles.iconStyle}
-              itemContainerStyle={{ backgroundColor: COLORS.bg }}
-              itemTextStyle={{ fontSize: 16 }}
-              containerStyle={styles.containerStyle}
-              backgroundColor="#00000099"
-              activeColor="#ffffff15"
-              search={false}
-              // mode="modal"
-              maxHeight={400}
-              labelField="label"
-              valueField="value"
-              renderItem={renderDropDownList}
+            <SharedDropdown
+              data={cateList}
+              value={cateValue}
               onChange={(item) => {
                 setCateValue(item);
                 setSearchParams({ ...searchParams, filterBy: item.value });
               }}
-              data={cateList}
-              value={cateValue}
-              // renderLeftIcon={() => (
-              //   <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
-              // )}
             />
           </XStack>
           <PieChart data={pieChartData} filter={searchParams.filterBy} />

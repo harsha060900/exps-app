@@ -117,7 +117,7 @@ export default function PieChart({
                   borderRadius={50}
                 ></View>
                 {/* <Entypo name="dot-single" size={28} color={ele.bgColor} /> */}
-                <Text>{ele.cateName}</Text>
+                <Text textTransform="capitalize">{ele.cateName}</Text>
               </XStack>
             ))}
           </Stack>

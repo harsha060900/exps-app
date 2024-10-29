@@ -6,28 +6,24 @@ import { COLORS, styles } from "@/src/constants";
 
 type DropdownProps = {
   data: { label: string; value: string }[];
-  placeholder: string;
+  placeholder: string | null;
+  value: { label: string; value: string };
+  onChange: (item: { label: string; value: string }) => void;
 };
 
 export default function SharedDropdown({
   data,
-  placeholder,
-  a
+  placeholder = "Select a value",
+  value,
+  onChange
 }: DropdownProps) {
-  console.log("P:", placeholder);
   // rendering dropdown list
   const renderItem = (item) => {
     return (
       <View style={styles.item}>
-        <Text style={styles.textItem}>{item.label}</Text>
-        {/* {item.value === value && (
-              <AntDesign
-                style={styles.icon}
-                color="black"
-                name="Safety"
-                size={20}
-              />
-            )} */}
+        <Text style={styles.textItem} textTransform="capitalize">
+          {item.label}
+        </Text>
       </View>
     );
   };
@@ -37,7 +33,8 @@ export default function SharedDropdown({
       style={[
         styles.dropdown,
         {
-          borderColor: COLORS.blur_border
+          borderColor: COLORS.blur_border,
+          flex: 1
         }
       ]}
       placeholderStyle={styles.placeholderStyle}
@@ -50,7 +47,7 @@ export default function SharedDropdown({
       backgroundColor="#00000099"
       activeColor="#ffffff15"
       search={false}
-      mode="modal"
+      // mode="modal"
       maxHeight={400}
       labelField="label"
       valueField="value"
@@ -58,10 +55,10 @@ export default function SharedDropdown({
       searchPlaceholder="Search category"
       renderItem={renderItem}
       onChange={(item) => {
-        a(item);
+        onChange(item);
       }}
       data={data}
-      //   value={value}
+      value={value}
       // renderLeftIcon={() => (
       //   <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
       // )}
