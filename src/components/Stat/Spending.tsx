@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { Stack, Text, View, XStack, YStack } from "tamagui";
+import React, { useState, useEffect } from "react";
+import { Text, View, XStack } from "tamagui";
 // styles
 import { COLORS, styles } from "@/src/constants";
 // other
@@ -8,12 +8,11 @@ import moment from "moment";
 import { useGetCategoryQuery } from "@/src/store/services/categoryApi";
 import { useGetPieChartQuery } from "@/src/store/services/chartApi";
 // compo
-import { Dropdown } from "react-native-element-dropdown";
 import SharedDatePicker from "@/src/shared/SharedDatePicker";
 import SharedDialog from "@/src/shared/SharedDialog";
 import SharedSpinner from "@/src/shared/SharedSpinner";
-import PieChart from "@/src/shared/charts/PieChart";
 import SharedDropdown from "@/src/shared/SharedDropdown";
+import PieChart from "@/src/shared/charts/PieChart";
 
 export default function Spending() {
   const [searchParams, setSearchParams] = useState({
@@ -24,8 +23,8 @@ export default function Spending() {
   const { data: pieChartData, isFetching: chartLoading } =
     useGetPieChartQuery(searchParams);
   const { data: cateData, isFetching } = useGetCategoryQuery("");
+
   const [isDateOpen, setDateOpen] = useState(false);
-  const [dateValue, setDateValue] = useState({ start: "", end: "" });
   const [periodValue, setPeriodValue] = useState({
     label: "This Month",
     value: "month"
@@ -36,6 +35,7 @@ export default function Spending() {
     { label: "This Month", value: "month" },
     { label: "Custom", value: "custom" }
   ]);
+  const [dateValue, setDateValue] = useState({ start: "", end: "" });
   const [cateValue, setCateValue] = useState({ label: "All", value: "" });
   const [cateList, setCateList] = useState([{ label: "All", value: "" }]);
   useEffect(() => {

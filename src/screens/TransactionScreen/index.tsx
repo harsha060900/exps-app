@@ -31,6 +31,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { expenseState, setExpenseEdit } from "@/src/store/slices/expenseSlice";
 import { SharedToast } from "@/src/shared/SharedToast";
 import Income from "@/src/components/Income";
+import SharedDialog from "@/src/shared/SharedDialog";
 
 export default function TransactionScreen() {
   const [fabOpen, setFabOpen] = useState(false);
@@ -42,6 +43,8 @@ export default function TransactionScreen() {
     start: "",
     end: ""
   });
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
   const [dateOpen, setDateOpen] = useState({ isOpen: false, name: "" });
   let [finalDate, setFinalDate] = useState({
     start: "",
@@ -50,7 +53,7 @@ export default function TransactionScreen() {
   const { data, isFetching } = useGetExpenseQuery(searchParams);
   const [deleteExpense] = useDeleteExpenseMutation();
   const dispatch = useDispatch();
-  const expStore = useSelector(expenseState);
+
   async function handleDelExp(id: number) {
     try {
       const res = await deleteExpense(id);
@@ -79,7 +82,12 @@ export default function TransactionScreen() {
         </View>
         <Separator borderRightColor={COLORS.blur_border} vertical />
 
-        <View onPress={() => handleDelExp(item.item.id)}>
+        <View
+          onPress={() => {
+            setDeleteId(item.item.id);
+            setDeleteOpen(true);
+          }}
+        >
           <FontAwesome name="trash" size={20} color={COLORS.prime_red} />
         </View>
       </XStack>
@@ -361,6 +369,16 @@ export default function TransactionScreen() {
         onConfirm={handleDateChange}
         onCancel={() => setDateOpen({ isOpen: false, name: "" })}
       />
+      {/* Delete Modal */}
+      <SharedDialog
+        open={deleteOpen}
+        onClose={() => {
+          setDeleteOpen(false);
+        }}
+        title="Delete Transaction"
+      >
+        <Text>Are you sure to delete</Text>
+      </SharedDialog>
       <SharedFAB open={fabOpen} onStateChange={(data) => setFabOpen(data)} />
     </>
   );

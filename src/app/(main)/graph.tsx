@@ -1,8 +1,7 @@
-import { View, Text } from "tamagui";
 import { SafeAreaView } from "react-native-safe-area-context";
 // style
 import { COLORS } from "@/src/constants";
-import ChartSCreen from "@/src/screens/ChartScreen/ChartScreen";
+import ChartSCreen from "@/src/screens/ChartScreen/StatScreen";
 export default function Tab() {
   return (
     <SafeAreaView

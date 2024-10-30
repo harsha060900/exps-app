@@ -4,13 +4,13 @@ import { XStack, Dialog } from "tamagui";
 // compo
 import { SharedCancelBtn, SharedSaveBtn } from "@/src/shared/SharedBtn";
 
-export default function SharedDialog({ open, children, onClose }) {
+export default function SharedDialog({ open, children, onClose, title = "" }) {
   return (
     <Dialog modal open={open}>
       <Dialog.Portal>
         <Dialog.Overlay bc={"#00000099"} onPress={onClose} key="overlay" />
         <Dialog.Content>
-          <Dialog.Title></Dialog.Title>
+          {title && <Dialog.Title size={"$6"}>{title}</Dialog.Title>}
           {children}
           {/* Buttons */}
           {/* <XStack mt={5} jc={"center"} gap={10}>
