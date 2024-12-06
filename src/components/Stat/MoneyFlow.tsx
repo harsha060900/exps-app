@@ -7,6 +7,7 @@ import SharedDatePicker from "@/src/shared/SharedDatePicker";
 import SharedDialog from "@/src/shared/SharedDialog";
 import SharedSpinner from "@/src/shared/SharedSpinner";
 import SharedDropdown from "@/src/shared/SharedDropdown";
+import AreaChart from "@/src/shared/charts/AreaChart";
 
 const MoneyFlow = () => {
   const [searchParams, setSearchParams] = useState({
@@ -103,6 +104,7 @@ const MoneyFlow = () => {
           onChange={handleTimeFilter}
         />
       </XStack>
+      <AreaChart />
 
       {/* Date Picker */}
       <SharedDialog

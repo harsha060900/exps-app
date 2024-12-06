@@ -8,7 +8,7 @@ import { COLORS } from "@/src/constants";
 
 export default function PieChart({
   data,
-  filter = ""
+  filter
 }: {
   data: { data: []; totExp: number };
   filter: string;

@@ -50,7 +50,13 @@ export default function SpendingChart() {
           </Text>
         </View>
       </XStack>
-      {isFetching ? <SharedSpinner /> : <PieChart data={data} />}
+      {isFetching ? (
+        <Stack h={250}>
+          <SharedSpinner />
+        </Stack>
+      ) : (
+        <PieChart data={data} filter="" />
+      )}
     </>
   );
 }
