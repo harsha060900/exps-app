@@ -97,7 +97,7 @@ const MoneyFlow = () => {
       <Text fontSize={"$7"} fontFamily={"$heading"} mb={10}>
         Money Flow
       </Text>
-      <XStack gap={20}>
+      <XStack>
         <SharedDropdown
           data={timeFilter}
           value={periodValue}
