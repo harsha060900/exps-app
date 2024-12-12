@@ -189,7 +189,9 @@ export default function ListCategory() {
             </ScrollView>
           ) : (
             <YStack ai={"center"} jc={"center"} flex={1}>
-              <Text>Category not found</Text>
+              <Text fontSize={"$4"} color={COLORS.neutral_text}>
+                Category not found
+              </Text>
             </YStack>
           )}
           {/* <Fab setIsOpen={(data) => setDialogOpen(data)} /> */}

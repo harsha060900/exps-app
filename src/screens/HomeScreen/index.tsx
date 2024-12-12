@@ -119,7 +119,7 @@ function IncomeExpenseCard({ title, amt, icon, mr = 0, ml = 0, color }: any) {
         <XStack ai={"center"}>
           <MaterialCommunityIcons name="currency-inr" size={24} color="#fff" />
           <Text ff={"$medium"} fontSize={"$7"} color={"#fff"}>
-            {amt}
+            {amt ? amt : "--"}
           </Text>
         </XStack>
       </YStack>

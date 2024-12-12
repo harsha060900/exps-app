@@ -322,7 +322,7 @@ export default function ExpenseScreen() {
                           fontSize={"$3"}
                           color={COLORS.neutral_text}
                         >
-                          Select a category
+                          Please select a category
                         </Text>
                       )}
                     </XStack>

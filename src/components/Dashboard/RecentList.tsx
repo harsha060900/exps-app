@@ -7,7 +7,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { COLORS } from "@/src/constants";
 import { router } from "expo-router";
 
-export default function RecentList({ data }) {  
+export default function RecentList({ data }) {
   return (
     <YStack mt={20}>
       <XStack jc={"space-between"} ai={"center"}>
@@ -24,109 +24,87 @@ export default function RecentList({ data }) {
           </Text>
         </View>
       </XStack>
-      {data.map(
-        (ele, ind) =>
-          ind < 4 && (
-            <XStack
-              bg={COLORS.card_bg}
-              borderRadius={8}
-              key={ind}
-              my={5}
-              py={8}
-              pr={12}
-              pl={8}
-              jc={"space-between"}
-            >
-              <XStack gap={6}>
-                {/* <View
-                  position="relative"
-                  mr={3}
-                  bg={
-                    ele.type === "income"
-                      ? COLORS.primary_lite
-                      : COLORS.error_lite
-                  }
-                  px={10}
-                  py={5}
-                  borderRadius={15}
-                >
-                  <FontAwesome5
-                    name="money-bill-alt"
-                    style={{ marginTop: 11 }}
-                    size={24}
-                    color={
-                      ele.type === "income" ? COLORS.primary : COLORS.prime_red
-                    }
-                  />
-                  <Feather
-                    style={{ position: "absolute", top: 0, left: 14 }}
-                    name={
-                      `trending-${
-                        ele.type === "income" ? "down" : "up"
-                      }` as keyof object
-                    }
-                    size={21}
-                    color={
-                      ele.type === "income" ? COLORS.primary : COLORS.prime_red
-                    }
-                  />
-                </View> */}
-
-                <XStack ai="center">
-                  <Text
-                    fontFamily={"$medium"}
-                    fontSize={"$2"}
-                    color={
-                      ele.type === "income" ? COLORS.primary : COLORS.prime_red
-                    }
-                  >
-                    {ele.type === "income" ? "+" : "-"}
-                  </Text>
-                  <Text
-                    fontFamily={"$medium"}
-                    fontSize={"$4"}
-                    color={
-                      ele.type === "income" ? COLORS.primary : COLORS.prime_red
-                    }
-                  >
-                    <MaterialCommunityIcons
-                      name="currency-inr"
-                      size={16}
-                      // color={COLORS.icon}
+      {data.length > 0 ? (
+        data.map(
+          (ele, ind) =>
+            ind < 4 && (
+              <XStack
+                bg={COLORS.card_bg}
+                borderRadius={8}
+                key={ind}
+                my={5}
+                py={8}
+                pr={12}
+                pl={8}
+                jc={"space-between"}
+              >
+                <XStack gap={6}>
+                  <XStack ai="center">
+                    <Text
+                      fontFamily={"$medium"}
+                      fontSize={"$2"}
                       color={
                         ele.type === "income"
                           ? COLORS.primary
                           : COLORS.prime_red
                       }
-                    />
-                    {ele.amt}
-                  </Text>
-                </XStack>
-              </XStack>
-
-              <YStack ai="flex-end" jc="center">
-                <Text ml={4} fontSize={"$3"}>
-                  {moment(ele.period).format("DD MMM YY")}
-                </Text>
-                {ele.cateName && (
-                  <XStack ai={"center"}>
-                    <Text
-                      color={COLORS.neutral_text}
-                      fontFamily={"$medium"}
-                      fontSize={"$2"}
                     >
-                      {ele.cateName}
+                      {ele.type === "income" ? "+" : "-"}
                     </Text>
-                    {ele.subCateName && (
-                      <Text color={COLORS.neutral_text} fontSize={"$2"}>
-                        {" -->"} {ele.subCateName}
-                      </Text>
-                    )}
+                    <Text
+                      fontFamily={"$medium"}
+                      fontSize={"$4"}
+                      color={
+                        ele.type === "income"
+                          ? COLORS.primary
+                          : COLORS.prime_red
+                      }
+                    >
+                      <MaterialCommunityIcons
+                        name="currency-inr"
+                        size={16}
+                        // color={COLORS.icon}
+                        color={
+                          ele.type === "income"
+                            ? COLORS.primary
+                            : COLORS.prime_red
+                        }
+                      />
+                      {ele.amt}
+                    </Text>
                   </XStack>
-                )}
-              </YStack>
-            </XStack>
-          )
+                </XStack>
+
+                <YStack ai="flex-end" jc="center">
+                  <Text ml={4} fontSize={"$3"}>
+                    {moment(ele.period).format("DD MMM YY")}
+                  </Text>
+                  {ele.cateName && (
+                    <XStack ai={"center"}>
+                      <Text
+                        color={COLORS.neutral_text}
+                        fontFamily={"$medium"}
+                        fontSize={"$2"}
+                      >
+                        {ele.cateName}
+                      </Text>
+                      {ele.subCateName && (
+                        <Text color={COLORS.neutral_text} fontSize={"$2"}>
+                          {" -->"} {ele.subCateName}
+                        </Text>
+                      )}
+                    </XStack>
+                  )}
+                </YStack>
+              </XStack>
+            )
+        )
+      ) : (
+        <Stack mt={30} jc="center" ai="center">
+          <Text fontSize={"$4"} color={COLORS.neutral_text}>
+            No Transactions made
+          </Text>
+        </Stack>
       )}
     </YStack>
   );
