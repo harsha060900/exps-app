@@ -7,17 +7,12 @@ import {
   Button,
   Separator,
   ScrollView,
-  Popover
+  ToggleGroup
 } from "tamagui";
 import { Stack, router } from "expo-router";
 import moment from "moment";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 // icons
-import {
-  MaterialCommunityIcons,
-  Feather,
-  FontAwesome
-} from "@expo/vector-icons";
+import { MaterialCommunityIcons, FontAwesome } from "@expo/vector-icons";
 //styels
 import { COLORS } from "@/src/constants";
 // redux
@@ -25,13 +20,17 @@ import {
   useDeleteExpenseMutation,
   useGetExpenseQuery
 } from "@/src/store/services/expenseApi";
-import SharedSpinner from "@/src/shared/SharedSpinner";
-import SharedFAB from "@/src/shared/SharedFAB";
 import { useDispatch, useSelector } from "react-redux";
 import { expenseState, setExpenseEdit } from "@/src/store/slices/expenseSlice";
+// other compo
+import SharedSpinner from "@/src/shared/SharedSpinner";
+import SharedFAB from "@/src/shared/SharedFAB";
 import { SharedToast } from "@/src/shared/SharedToast";
 import Income from "@/src/components/Income";
 import SharedDialog from "@/src/shared/SharedDialog";
+import SharedDropdown from "@/src/shared/SharedDropdown";
+import SharedDatePicker from "@/src/shared/SharedDatePicker";
+import { SharedToggle, SharedToggleItem } from "@/src/shared/SharedToggle";
 
 export default function TransactionScreen() {
   const [fabOpen, setFabOpen] = useState(false);
@@ -40,19 +39,50 @@ export default function TransactionScreen() {
 
   const [searchParams, setSearchParams] = useState({
     orderBy: "desc",
-    start: "",
-    end: ""
+    start: moment().startOf("month").format("YYYY-MM-DD"),
+    end: moment().endOf("month").format("YYYY-MM-DD"),
+    type:"all"
   });
+  const [dateFilter, setDateFilter] = useState([
+    { label: "Today", value: "today" },
+    { label: "This Week", value: "week" },
+    { label: "This Month", value: "month" },
+    { label: "Custom", value: "custom" }
+  ]);
+  const [dateFilterValue, setDateFilterValue] = useState({
+    label: "This Month",
+    value: "month"
+  });
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [dateValue, setDateValue] = useState({ start: "", end: "" });
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
-  const [dateOpen, setDateOpen] = useState({ isOpen: false, name: "" });
-  let [finalDate, setFinalDate] = useState({
-    start: "",
-    end: ""
-  });
+  const [dateOpen, setDateOpen] = useState(false);
   const { data, isFetching } = useGetExpenseQuery(searchParams);
   const [deleteExpense] = useDeleteExpenseMutation();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (dateFilterValue.value === "custom")
+      setDateFilter([
+        { label: "Today", value: "today" },
+        { label: "This Week", value: "week" },
+        { label: "This Month", value: "month" },
+        {
+          label: `${dateValue.start} - ${dateValue.end}`,
+          value: "custom"
+        }
+      ]);
+    else {
+      setDateFilter([
+        { label: "Today", value: "today" },
+        { label: "This Week", value: "week" },
+        { label: "This Month", value: "month" },
+        { label: "Custom", value: "custom" }
+      ]);
+      setDateValue({ start: "", end: "" });
+    }
+  }, [searchParams.start, searchParams.end]);
 
   async function handleDelExp(id: number) {
     try {
@@ -63,6 +93,57 @@ export default function TransactionScreen() {
       // SharedToast(err, COLORS.error)
     }
   }
+
+  const handleTypeFilter=(val)=>{
+    setTypeFilter(val)
+    setSearchParams({...searchParams, type:val})
+  }
+
+  const handleTimeFilter = (item: { label: string; value: string }) => {
+    if (item.value === "today") {
+      setSearchParams({
+        ...searchParams,
+        start: moment().startOf("day").format("YYYY-MM-DD HH:mm:ss"),
+        end: moment().endOf('day').format("YYYY-MM-DD HH:mm:ss")
+      });
+      setDateFilterValue(item);
+      return;
+    } else if (item.value === "week") {
+      setSearchParams({
+        ...searchParams,
+        start: moment().startOf("week").format("YYYY-MM-DD HH:mm:ss"),
+        end: moment().endOf('day').format("YYYY-MM-DD HH:mm:ss")
+      });
+      setDateFilterValue(item);
+      return;
+    } else if (item.value === "month") {
+      setSearchParams({
+        ...searchParams,
+        start: moment().startOf("month").format("YYYY-MM-DD HH:mm:ss"),
+        end: moment().endOf('day').format("YYYY-MM-DD HH:mm:ss")
+      });
+      setDateFilterValue(item);
+      return;
+    } else {
+      setDateOpen(!dateOpen);
+      setDateFilterValue(item);
+      return;
+    }
+  };
+
+  const handleCustomDate = (day) => {
+    if (
+      day < dateValue.start ||
+      !dateValue.start ||
+      (dateValue.start && dateValue.end)
+    ) {
+      setDateValue({ start: day, end: "" });
+    } else {
+      setDateValue({ ...dateValue, end: day });
+      setSearchParams({ ...searchParams, start: dateValue.start+" 00:00:00", end: day+" 23:59:59" });
+      setDateOpen(false);
+    }
+  };
 
   function Action(item) {
     return (
@@ -94,28 +175,6 @@ export default function TransactionScreen() {
     );
   }
 
-  const handleDateChange = (val) => {
-    if (dateOpen.name === "start")
-      setFinalDate({
-        ...finalDate,
-        start: moment(val).format("yyyy-MM-DD")
-      });
-    // setSearchParams({
-    //   ...searchParams,
-    //   start: moment(val).format("yyyy-mm-DD")
-    // });
-    else
-      setFinalDate({
-        ...finalDate,
-        end: moment(val).format("yyyy-MM-DD")
-      });
-    // setSearchParams({
-    //   ...searchParams,
-    //   end: moment(val).format("yyyy-mm-DD")
-    // });
-    setDateOpen({ isOpen: false, name: "" });
-  };
-
   return (
     <>
       <Stack.Screen
@@ -129,7 +188,16 @@ export default function TransactionScreen() {
           headerTitleStyle: {
             fontFamily: "JostSemiBold"
           },
-          headerShadowVisible: false
+          headerShadowVisible: false,
+          headerRight: () => (
+            <XStack width={"85%"} pr={20}>
+              <SharedDropdown
+                data={dateFilter}
+                value={dateFilterValue}
+                onChange={handleTimeFilter}
+              />
+            </XStack>
+          )
         }}
       />
       <YStack mt={10} flex={1} gap={10}>
@@ -138,90 +206,7 @@ export default function TransactionScreen() {
         ) : (
           <>
             {/* date filter */}
-            <XStack ai="center">
-              {/* from date */}
-              <MaterialCommunityIcons
-                name="window-close"
-                size={12}
-                color={COLORS.icon}
-                style={{
-                  backgroundColor: COLORS.card_bg,
-                  padding: 5,
-                  borderRadius: 50
-                }}
-                onPress={() => {
-                  setSearchParams({ ...searchParams, start: "" }),
-                    setFinalDate({ ...finalDate, start: "" });
-                }}
-              />
-              <Button
-                size="$3"
-                borderColor={COLORS.blur_border}
-                ml={5}
-                mr={8}
-                w={110}
-                px={0}
-                onPress={() => setDateOpen({ isOpen: true, name: "start" })}
-              >
-                <Text color={COLORS.neutral_text}>
-                  {finalDate.start ? finalDate.start : "Select a date"}
-                </Text>
-              </Button>
-              {/* to date */}
-              <MaterialCommunityIcons
-                name="window-close"
-                size={12}
-                color={COLORS.icon}
-                style={{
-                  backgroundColor: COLORS.card_bg,
-                  padding: 5,
-                  borderRadius: 50
-                }}
-                onPress={() => {
-                  setSearchParams({ ...searchParams, end: "" }),
-                    setFinalDate({ ...finalDate, end: "" });
-                }}
-              />
-              <Button
-                size="$3"
-                px={0}
-                borderColor={COLORS.blur_border}
-                ml={5}
-                w={110}
-                onPress={() => setDateOpen({ isOpen: true, name: "end" })}
-              >
-                <Text color={COLORS.neutral_text}>
-                  {finalDate.end ? finalDate.end : "Select a date"}
-                </Text>
-              </Button>
-              {/* filter Btn */}
-              <Button
-                size="$3"
-                px={5}
-                bg={
-                  !finalDate.start || !finalDate.end
-                    ? COLORS.blur_border
-                    : COLORS.primary
-                }
-                ml={12}
-                // w={50}
-                disabled={!finalDate.start || !finalDate.end}
-                onPress={() =>
-                  setSearchParams({
-                    ...searchParams,
-                    start: finalDate.start + " 00:00:00",
-                    end: finalDate.end + " 23:59:59"
-                  })
-                }
-              >
-                <MaterialCommunityIcons
-                  name="filter"
-                  color={"#fff"}
-                  size={16}
-                />
-                <Text fontSize={"$4"}>Filter</Text>
-              </Button>
-            </XStack>
+
             {data.data.length === 0 ? (
               <XStack flex={1} jc={"center"} ai={"center"}>
                 <Text fontSize={"$4"} color={COLORS.neutral_text}>
@@ -230,8 +215,29 @@ export default function TransactionScreen() {
               </XStack>
             ) : (
               <>
-                {/* Sort */}
-                <XStack ai="center" jc="flex-end">
+                <XStack ai="center" jc="space-between">
+                  {/* filter toggle */}
+                  <ToggleGroup
+                    type="single"
+                    size={'$3'}
+                    value={typeFilter}
+                    onValueChange={(val) => {
+                      handleTypeFilter(val)
+                    }}
+                    disableDeactivation
+                    
+                  >
+                    <ToggleGroup.Item borderColor={COLORS.primary} value="income" bg={typeFilter=='income' ? COLORS.primary : 'transparent'}>
+                      <Text>Income</Text>
+                    </ToggleGroup.Item >
+                    <ToggleGroup.Item  borderTopColor={COLORS.primary} borderBottomColor={COLORS.primary} value="all" bg={typeFilter=='all' ? COLORS.primary : 'transparent'}>
+                      <Text>All</Text>
+                    </ToggleGroup.Item>
+                    <ToggleGroup.Item value="expense"  borderColor={COLORS.primary} bg={typeFilter=='expense' ? COLORS.primary : 'transparent'}>
+                      <Text>Expense</Text>
+                    </ToggleGroup.Item>
+                  </ToggleGroup>
+                  {/* Sort */}
                   <XStack
                     gap={8}
                     onPress={() =>
@@ -349,26 +355,6 @@ export default function TransactionScreen() {
           </>
         )}
       </YStack>
-      <DateTimePickerModal
-        isVisible={dateOpen.isOpen}
-        mode="date"
-        is24Hour={true}
-        date={
-          dateOpen.name === "start" && finalDate.start.length > 0
-            ? new Date(finalDate.start)
-            : dateOpen.name === "end" && finalDate.end.length > 0
-            ? new Date(finalDate.end)
-            : new Date()
-        }
-        minimumDate={
-          finalDate.start.length > 0 && dateOpen.name === "end"
-            ? new Date(finalDate.start)
-            : new Date("2020-05-05")
-        }
-        maximumDate={new Date()}
-        onConfirm={handleDateChange}
-        onCancel={() => setDateOpen({ isOpen: false, name: "" })}
-      />
       {/* Delete Modal */}
       <SharedDialog
         open={deleteOpen}
@@ -378,6 +364,20 @@ export default function TransactionScreen() {
         title="Delete Transaction"
       >
         <Text>Are you sure to delete</Text>
+      </SharedDialog>
+      {/* Date Picker */}
+      <SharedDialog
+        open={dateOpen}
+        onClose={() => {
+          setDateOpen(false);
+        }}
+      >
+        <SharedDatePicker
+          mode="date"
+          fromDate={dateValue.start}
+          toDate={dateValue.end}
+          onChange={handleCustomDate}
+        />
       </SharedDialog>
       <SharedFAB open={fabOpen} onStateChange={(data) => setFabOpen(data)} />
     </>

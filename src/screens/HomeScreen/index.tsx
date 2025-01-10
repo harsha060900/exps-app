@@ -16,13 +16,16 @@ import SharedSpinner from "@/src/shared/SharedSpinner";
 // redux
 import { useGetExpenseQuery } from "@/src/store/services/expenseApi";
 import SpendingChart from "@/src/components/Dashboard/SpendingChart";
+// other
+import moment from "moment";
+
 
 export default function HomeScreen() {
   const [fabOpen, setFabOpen] = useState(false);
   const [searchParams, setSearchParams] = useState({
     orderBy: "desc",
-    start: "",
-    end: ""
+    start: moment().startOf("month").format("YYYY-MM-DD"),
+    end: moment().endOf("month").format("YYYY-MM-DD")
   });
   const { data, isFetching } = useGetExpenseQuery(searchParams);
 

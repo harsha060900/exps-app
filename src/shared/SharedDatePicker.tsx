@@ -30,6 +30,7 @@ const SharedDatePicker = memo(function SharedDatePicker({
         }
       }}
       maxDate={moment().format("YYYY-MM-DD")}
+      enableSwipeMonths={true}
     />
   );
 });

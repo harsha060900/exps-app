@@ -60,5 +60,3 @@ export default function SpendingChart() {
     </>
   );
 }
-
-const styles = StyleSheet.create({});

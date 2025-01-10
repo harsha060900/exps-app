@@ -38,6 +38,7 @@ export default function Spending() {
   const [dateValue, setDateValue] = useState({ start: "", end: "" });
   const [cateValue, setCateValue] = useState({ label: "All", value: "" });
   const [cateList, setCateList] = useState([{ label: "All", value: "" }]);
+  
   useEffect(() => {
     if (cateData?.data) {
       let res = cateData?.data?.map((ele) => ({
@@ -59,13 +60,15 @@ export default function Spending() {
           value: "custom"
         }
       ]);
-    else
+    else {
+      setDateValue({ start: "", end: "" });
       setTimeFilter([
         { label: "Today", value: "today" },
         { label: "This Week", value: "week" },
         { label: "This Month", value: "month" },
         { label: "Custom", value: "custom" }
       ]);
+    }
   }, [searchParams.start, searchParams.end]);
 
   const handleTimeFilter = (item: { label: string; value: string }) => {
@@ -137,33 +140,6 @@ export default function Spending() {
       ) : (
         <View>
           <XStack gap={20}>
-            {/* <Dropdown
-              style={[
-                styles.dropdown,
-                {
-                  borderColor: COLORS.blur_border,
-                  flex: 1
-                }
-              ]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              itemContainerStyle={{ backgroundColor: COLORS.bg }}
-              itemTextStyle={{ fontSize: 16 }}
-              containerStyle={styles.containerStyle}
-              backgroundColor="#00000099"
-              activeColor="#ffffff15"
-              search={false}
-              maxHeight={400}
-              labelField="label"
-              valueField="value"
-              renderItem={renderDropDownList}
-              onChange={(item) => {
-                handleTimeFilter(item);
-              }}
-              data={timeFilter}
-              value={periodValue}
-            /> */}
             <SharedDropdown
               data={timeFilter}
               value={periodValue}

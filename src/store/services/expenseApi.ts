@@ -5,7 +5,7 @@ export const expenseApi = api.injectEndpoints({
     getExpense: builder.query({
       query: (param) => {
         return {
-          url: `expense?orderBy=${param.orderBy}&start=${param.start}&end=${param.end}`
+          url: `expense?orderBy=${param.orderBy}&start=${param.start}&end=${param.end}&type=${param?.type}`
         };
       },
       providesTags: ["Expense"]

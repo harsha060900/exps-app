@@ -11,7 +11,7 @@ const COLORS = {
   prime_text: "#E5E4E2",
   neutral_text: "#aaaaaa",
   icon: "#aaaaaa",
-  blur_border: "#818181",
+  blur_border: "#5a5a5a",
   success: "#c7dfdb",
   error: "#e7c9ce",
   warn: "#f7b12d",

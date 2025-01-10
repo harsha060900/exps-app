@@ -3,12 +3,12 @@ import { COLORS } from "./Theme";
 
 const styles = StyleSheet.create({
   dropdown: {
-    height: 50,
+    height: 46,
     borderRadius: 6,
-    padding: 12,
+    paddingHorizontal: 15,
+    // paddingVertical: 4,
     color: COLORS.prime_text,
-    // borderColor: COLORS.blur_border,
-    borderWidth: 1
+    borderWidth: 1,
   },
   containerStyle: {
     backgroundColor: COLORS.bg,
@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
   },
   textItem: {
     flex: 1,
-    color: COLORS.prime_text
-    // fontSize: 16,
+    color: COLORS.prime_text,
+    fontSize: 14,
   },
   placeholderStyle: {
     color: COLORS.prime_text,
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   selectedTextStyle: {
     color: COLORS.prime_text,
     fontFamily: "JostRegular",
-    fontSize: 16
+    fontSize: 14
   },
   iconStyle: {
     width: 20,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     color: COLORS.prime_text,
     fontFamily: "JostRegular",
     borderRadius: 6
-  }
+  },
 });
 
 export { styles };

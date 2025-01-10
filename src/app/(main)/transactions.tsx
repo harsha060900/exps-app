@@ -1,3 +1,4 @@
+import React from "react";
 import TransactionScreen from "@/src/screens/TransactionScreen";
 import { View } from "tamagui";
 
